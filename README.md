@@ -10,6 +10,15 @@ Aplicação Streamlit para explorar candidaturas, fontes públicas e um benchmar
 
 Uma nota não é um fato nem uma previsão. É a aplicação documentada da régua metodológica às evidências disponíveis. A média ponderada é sempre calculada por `soma(nota × peso) / soma(pesos)`.
 
+## Navegação e leitura
+
+- **Eleição:** visão geral, escolha direta e alternância entre radar-chave, radar por blocos e ranking.
+- **Ficha do candidato:** conteúdo e tabelas à esquerda, gráfico alternável à direita; no celular, os blocos são empilhados sem sair da página.
+- **Comparar:** seleção de 2 a 4 nomes, simulação de pesos e cinco visualizações comparativas.
+- **Tabela-base auditável:** em cada ficha, exibe fator, peso, prós, contras, notas positiva e negativa, saldo e fonte. A última linha traz a média ponderada.
+
+A planilha original enviada ao projeto não continha fontes por linha. Essa ausência é mostrada como tal; a revisão atual oferece a fonte principal oficial e seu link, sem atribuí-la retroativamente à redação original.
+
 ## Executar localmente
 
 ```powershell

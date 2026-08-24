@@ -8,6 +8,7 @@ APP_TITLE = "Benchmark de Candidatos"
 BRAND = "Brasil Com Censo"
 TAGLINE = "Dados para escolher com autonomia"
 SNAPSHOT_DATE = "2026-08-24"
+KEY_FACTOR_IDS = [28, 25, 15, 32]
 
 CANDIDATE_COLORS = {
     "lula": "#C33A46",

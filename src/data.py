@@ -32,6 +32,40 @@ WEIGHT_COMPONENTS = [
     "coercion_exposure",
 ]
 
+# Correspondências temáticas de alta confiança entre a planilha original e a
+# taxonomia revisada. A tabela original permanece preservada integralmente.
+CURRENT_TO_ORIGINAL = {
+    1: 1,
+    2: 2,
+    3: 4,
+    5: 26,
+    7: 20,
+    8: 23,
+    9: 31,
+    10: 32,
+    12: 3,
+    13: 9,
+    15: 7,
+    16: 14,
+    17: 15,
+    18: 16,
+    19: 36,
+    20: 25,
+    21: 17,
+    22: 37,
+    23: 18,
+    24: 40,
+    25: 19,
+    26: 27,
+    28: 28,
+    30: 10,
+    31: 11,
+    32: 38,
+    37: 9,
+    38: 6,
+    39: 24,
+}
+
 
 @st.cache_data(show_spinner=False)
 def load_candidates() -> list[dict]:
@@ -70,6 +104,50 @@ def load_finance() -> pd.DataFrame:
     if "amount" in frame:
         frame["amount"] = pd.to_numeric(frame["amount"], errors="coerce")
     return frame
+
+
+@st.cache_data(show_spinner=False)
+def load_original_basis() -> pd.DataFrame:
+    raw = pd.read_csv(
+        DATA_DIR / "original_basis.tsv",
+        sep="\t",
+        header=None,
+        skiprows=1,
+        dtype=str,
+        encoding="utf-8",
+    )
+    raw = raw[raw[0].str.fullmatch(r"\d+", na=False)].copy()
+    layouts = {
+        "caiado": {"comment": 2, "plus": 3, "minus": 4, "balance": 5},
+        "lula": {"comment": 10, "plus": 7, "minus": 8, "balance": 9},
+        "flavio": {"comment": 15, "plus": 12, "minus": 13, "balance": 14},
+        "renan": {"comment": 19, "plus": 16, "minus": 17, "balance": 18},
+    }
+    candidates = candidate_map()
+    rows: list[dict] = []
+    for record in raw.itertuples(index=False, name=None):
+        for slug, layout in layouts.items():
+            comment = str(record[layout["comment"]])
+            positive, negative = comment, ""
+            if "❌" in comment:
+                positive, negative = comment.split("❌", 1)
+            positive = positive.replace("✅", "").replace("-", " ").strip()
+            negative = negative.replace("-", " ").strip()
+            rows.append(
+                {
+                    "ID original": int(record[0]),
+                    "Fator original": record[6],
+                    "Peso original": float(record[1]),
+                    "slug": slug,
+                    "Candidato": candidates[slug]["ballot_name"],
+                    "Prós": positive,
+                    "Contras": negative,
+                    "Pontos +": float(record[layout["plus"]]),
+                    "Pontos −": float(record[layout["minus"]]),
+                    "Saldo original": float(str(record[layout["balance"]]).replace(",", ".")),
+                }
+            )
+    return pd.DataFrame(rows)
 
 
 def candidate_map() -> dict[str, dict]:
@@ -190,17 +268,81 @@ def factor_note(slug: str, row: pd.Series) -> tuple[str, list[str]]:
     return note, []
 
 
+def factor_sources(slug: str, source_keys: Iterable[str]) -> list[dict]:
+    """Return the official sources used by a revised factor assessment."""
+    keys = list(source_keys)
+    if keys:
+        registry = {source["key"]: source for source in load_sources()}
+        return [registry[key] for key in keys if key in registry]
+    candidate = candidate_map()[slug]
+    return [
+        {
+            "key": f"plan_{slug}",
+            "title": f"Plano oficial de {candidate['ballot_name']} no TSE",
+            "publisher": "Tribunal Superior Eleitoral",
+            "type": "Proposta de governo",
+            "url": candidate["plan_url"],
+            "use": "Fonte geral da avaliação revisada",
+        }
+    ]
+
+
+def original_candidate_table_with_summary(slug: str) -> pd.DataFrame:
+    """Format the supplied base and keep its weighted balance as the final row."""
+    source = load_original_basis()
+    table = source[source["slug"] == slug].rename(
+        columns={
+            "Fator original": "Fator",
+            "Peso original": "Peso",
+            "Pontos +": "Nota prós",
+            "Pontos −": "Nota contras",
+            "Saldo original": "Saldo do fator",
+        }
+    )
+    table = table[
+        ["Fator", "Peso", "Prós", "Contras", "Nota prós", "Nota contras", "Saldo do fator"]
+    ].copy()
+    table["Fonte(s)"] = "Não informada na entrada original"
+
+    denominator = float(table["Peso"].sum())
+    weighted_plus = float((table["Nota prós"] * table["Peso"]).sum() / denominator) if denominator else float("nan")
+    weighted_minus = float((table["Nota contras"] * table["Peso"]).sum() / denominator) if denominator else float("nan")
+    weighted_balance = float((table["Saldo do fator"] * table["Peso"]).sum() / denominator) if denominator else float("nan")
+    summary = pd.DataFrame(
+        [
+            {
+                "Fator": "MÉDIA PONDERADA",
+                "Peso": denominator,
+                "Prós": "Σ(nota prós × peso) ÷ Σ(pesos)",
+                "Contras": "Σ(nota contras × peso) ÷ Σ(pesos)",
+                "Nota prós": round(weighted_plus, 2),
+                "Nota contras": round(weighted_minus, 2),
+                "Saldo do fator": round(weighted_balance, 2),
+                "Fonte(s)": "Cálculo a partir das 40 linhas anteriores",
+            }
+        ]
+    )
+    return pd.concat([table, summary], ignore_index=True)
+
+
 def candidate_factor_table(
     benchmark: pd.DataFrame,
     slug: str,
     custom_weights: Mapping[int, float] | None = None,
 ) -> pd.DataFrame:
     weights = normalize_weights(benchmark, custom_weights)
+    original = load_original_basis()
+    original_lookup = original.set_index(["slug", "ID original"])
     rows: list[dict] = []
     for index, row in benchmark.iterrows():
-        note, _ = factor_note(slug, row)
+        note, source_keys = factor_note(slug, row)
+        sources = factor_sources(slug, source_keys)
         score = float(row[SCORE_COLUMNS[slug]])
         weight = float(weights.iloc[index])
+        original_id = CURRENT_TO_ORIGINAL.get(int(row["id"]))
+        base = None
+        if original_id and (slug, original_id) in original_lookup.index:
+            base = original_lookup.loc[(slug, original_id)]
         rows.append(
             {
                 "ID": int(row["id"]),
@@ -210,6 +352,15 @@ def candidate_factor_table(
                 "Nota": score,
                 "Contribuição": round(score * weight, 2),
                 "Evidência": row[EVIDENCE_COLUMNS[slug]],
+                "Prós (base)": base["Prós"] if base is not None else "Sem correspondência direta na tabela original",
+                "Contras (base)": base["Contras"] if base is not None else "Exige justificativa específica na revisão",
+                "Nota prós (base)": float(base["Pontos +"]) if base is not None else pd.NA,
+                "Nota contras (base)": float(base["Pontos −"]) if base is not None else pd.NA,
+                "Saldo do fator (base)": float(base["Saldo original"]) if base is not None else pd.NA,
+                "Fonte(s)": (
+                    "; ".join(source["title"] for source in sources)
+                ),
+                "URL da fonte": sources[0]["url"] if sources else "",
                 "Fundamento": note,
             }
         )
@@ -234,6 +385,13 @@ def candidate_table_with_summary(
                 "Nota": round(float(average), 2),
                 "Contribuição": round(float(table["Contribuição"].sum()), 2),
                 "Evidência": "Cálculo",
+                "Prós (base)": "—",
+                "Contras (base)": "—",
+                "Nota prós (base)": pd.NA,
+                "Nota contras (base)": pd.NA,
+                "Saldo do fator (base)": pd.NA,
+                "Fonte(s)": "Cálculo a partir das linhas anteriores",
+                "URL da fonte": "",
                 "Fundamento": "Σ(nota × peso) ÷ Σ(pesos)",
             }
         ]

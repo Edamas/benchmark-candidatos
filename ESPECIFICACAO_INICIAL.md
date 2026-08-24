@@ -47,6 +47,43 @@ O primeiro recorte será a eleição presidencial de 2026. A arquitetura deverá
 - Exportação dos dados em JSON.
 - Exportação de gráficos como imagem.
 
+#### Tabela obrigatória da ficha
+
+Cada ficha de candidato deverá apresentar uma tabela central com, no mínimo, as seguintes colunas, nesta ordem:
+
+| Coluna | Conteúdo |
+|---|---|
+| Fator | Nome do aspecto de soberania avaliado. |
+| Peso | Importância estratégica do fator segundo a metodologia oficial. |
+| Prós | Evidências específicas que favorecem autonomia, capacidade nacional ou resistência à dependência externa. |
+| Contras | Evidências específicas que indicam dependência, vulnerabilidade, perda de controle ou subordinação externa. |
+| Nota prós | Intensidade total dos efeitos favoráveis, em escala definida e uniforme. |
+| Nota contras | Intensidade total dos efeitos desfavoráveis, na mesma escala. |
+| Saldo do fator | Resultado líquido do fator antes da aplicação do peso. |
+| Fonte(s) | Uma ou mais fontes individualizadas para os prós, contras e notas. |
+
+Regras de cálculo:
+
+- `saldo do fator = nota prós − nota contras`;
+- as notas de prós e contras usarão a mesma escala, inicialmente de 0 a 10;
+- o saldo ficará inicialmente entre −10 e +10;
+- `resultado ponderado do fator = saldo do fator × peso`, usado apenas no cálculo e nos detalhes, sem necessidade de ocupar uma coluna principal;
+- `média ponderada normalizada = soma(saldo × peso) / soma(pesos aplicáveis)`;
+- quando a interface exigir apresentação de 0 a 10, a normalização deverá ser exibida e documentada separadamente, sem substituir ou esconder o saldo original;
+- ausência de evidência não será registrada como pró nem contra;
+- prós e contras poderão coexistir no mesmo fator;
+- cada nota deverá ser explicada pelas evidências listadas, evitando números arbitrários.
+
+Comportamento da tabela:
+
+- permanecer visível na ficha, e não escondida apenas em área metodológica;
+- permitir pesquisa, ordenação e filtros por bloco, peso, saldo e confiança;
+- permitir expansão da linha para mostrar evidências completas, ressalvas e trechos relevantes;
+- exibir múltiplas fontes como links identificados, não como uma URL extensa e ilegível;
+- diferenciar visualmente fonte primária, fonte oficial, imprensa, Wikipédia e inferência;
+- disponibilizar download da tabela completa ou filtrada em JSON e CSV;
+- alimentar diretamente os gráficos da ficha, garantindo que tabela e visualizações utilizem os mesmos dados.
+
 ### Comparação
 
 - Seleção direta de candidatos.
@@ -56,6 +93,111 @@ O primeiro recorte será a eleição presidencial de 2026. A arquitetura deverá
 - Comparação das notas, pesos, fatores e médias ponderadas do benchmark.
 - Comparação de financiamento, patrimônio, experiência, propostas e outros indicadores disponíveis.
 - Links e fontes por item.
+
+### Matriz que fundamenta as notas
+
+O aplicativo deverá apresentar, e não apenas calcular internamente, a tabela completa utilizada como base do benchmark.
+
+Para cada combinação de candidato e fator, exibir:
+
+- fator avaliado;
+- definição operacional do fator;
+- peso e critérios que determinaram o peso;
+- nota atribuída;
+- **prós**: fatos, propostas, atos ou declarações que aumentem a autonomia nacional;
+- **contras**: fatos, propostas, atos ou declarações que aumentem dependência, vulnerabilidade ou subordinação externa;
+- ressalvas e ambiguidades;
+- justificativa sintética da nota, explicando como os prós e contras foram convertidos no valor final;
+- fonte individual de cada alegação;
+- tipo de fonte e de evidência;
+- data da fonte e data da última verificação;
+- grau de confiança da avaliação;
+- indicação clara quando não houver posição ou evidência suficiente.
+
+Os comentários não poderão ser genéricos nem apenas repetir uma descrição global do candidato. Cada nota deverá possuir fundamentação específica para o fator correspondente.
+
+#### Tipos de evidência
+
+Manter separadas, com sinalização visual:
+
+1. ato executado e resultado comprovado;
+2. política em execução;
+3. proposta registrada em plano oficial;
+4. projeto legislativo ou compromisso formal;
+5. declaração pública inequívoca;
+6. informação secundária confirmada;
+7. inferência analítica, que deverá ser explicitamente identificada e nunca apresentada como fato.
+
+#### Apresentação no aplicativo
+
+- Tabela pesquisável, filtrável e ordenável.
+- Alternância entre visão resumida e visão detalhada.
+- Expansão de cada linha para mostrar prós, contras, ressalvas e fontes.
+- Tooltips nos gráficos com resumo da justificativa.
+- Clique em uma nota ou ponto do gráfico abre o respectivo fundamento.
+- Filtros por candidato, fator, bloco temático, peso, nota, tipo de evidência, confiança e fonte.
+- Download integral ou filtrado em JSON e CSV.
+- Possibilidade de baixar uma ficha gráfica da comparação como imagem.
+- Linha final de média ponderada, sem criar colunas intermediárias de “ponderada”.
+
+#### Auditabilidade do cálculo
+
+- Fórmula geral: `soma(nota × peso) / soma(pesos aplicáveis)`.
+- Notas e pesos devem permanecer disponíveis no conjunto de dados baixável.
+- Alterações metodológicas devem possuir versão e histórico.
+- A interface deve informar qual versão da metodologia e dos dados produziu cada gráfico.
+- O usuário poderá visualizar o efeito dos pesos e, em modo de simulação, alterar pesos sem modificar a versão oficial do benchmark.
+
+### Fatores obrigatórios do benchmark
+
+Os fatores abaixo devem existir como linhas independentes da matriz, com notas, pesos, prós, contras, comentários e fontes próprios. Não poderão ser ocultados dentro de categorias excessivamente amplas:
+
+#### Terras raras e minerais críticos
+
+- controle brasileiro das reservas e dos ativos;
+- regras para capital e controle estrangeiro;
+- processamento, refino e separação realizados no Brasil;
+- transferência e domínio tecnológico;
+- agregação de valor antes da exportação;
+- destino da produção e concentração em um único país comprador;
+- efeitos sobre defesa, semicondutores, baterias e indústria;
+- salvaguardas ambientais e territoriais.
+
+#### Transição energética
+
+- segurança e continuidade do abastecimento;
+- diversidade da matriz energética;
+- domínio nacional de equipamentos, tecnologias e cadeias produtivas;
+- biocombustíveis, energia solar, eólica, nuclear, hidrelétrica, petróleo e gás;
+- baterias, armazenamento, redes elétricas e minerais necessários;
+- dependência de fornecedores estrangeiros;
+- compatibilidade entre descarbonização, industrialização e autonomia regulatória;
+- financiamento e efeitos distributivos.
+
+#### Indústria nacional
+
+- densidade e diversidade das cadeias produtivas brasileiras;
+- produção de máquinas, equipamentos e insumos críticos;
+- engenharia, pesquisa, patentes e propriedade intelectual;
+- conteúdo nacional eficiente e compras públicas;
+- capacidade de substituir importações críticas;
+- integração competitiva ao comércio exterior sem desindustrialização;
+- participação de capital estrangeiro e respectivas salvaguardas;
+- empregos qualificados, produtividade e agregação de valor.
+
+#### Ferrovias
+
+- expansão, integração e interoperabilidade da malha;
+- transporte de cargas e passageiros;
+- ligação entre regiões produtoras, cidades, portos e fronteiras;
+- controle dos corredores e gargalos logísticos;
+- modelo de concessão, propriedade e regulação;
+- origem do financiamento, equipamentos, sinalização e tecnologia;
+- produção nacional de trilhos, material rodante e sistemas ferroviários;
+- tarifas, direito de passagem, capacidade e continuidade do serviço;
+- risco de a infraestrutura servir apenas à exportação primária sem integração territorial e industrial.
+
+Esses fatores poderão pertencer a blocos temáticos para organização visual, mas cada um conservará nota e peso próprios no cálculo.
 
 ## Dados e fontes
 

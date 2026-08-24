@@ -1,0 +1,42 @@
+ID	Peso	Obs (Caiado)	Lula (+)	Lula (-)	Lula (=)	Fator de Soberania	Caiado (+)	Caiado (-)	Caiado (=)	Obs (Lula)	Peso	Flávio (+)	Flávio (-)	Flávio (=)	Obs (Flávio)	Renan (+)	Renan (-)	Renan (=)	Obs (Renan)
+1	5	✅União-militar ❌Brecha-mata	6	3	3	Controle Fronteiras	9	3	6	✅Inteligência-foco ❌Déficit-efetivo	5	8	3	5	✅Força-divisas ❌Foco-ostensivo	7	3	4	✅Patrulhas-móveis ❌Vão-orçamentário
+2	5	✅Asfixia-territorial ❌Falha-financeira	7	3	4	Crime Transnacional	9	4	5	✅Acordo-global ❌Lento-rastreio	5	8	4	4	✅Combate-cargas ❌Suspeita-lavagem	9	3	6	✅Guerra-facções ❌Risco-confronto
+3	5	✅Potência-agro ❌Abandono-familiar	9	3	6	Segurança Alimentar	10	4	6	✅Fomento-Pronaf ❌Inflação-básica	5	10	4	6	✅Aliança-ruralista ❌Submédio-mercado	7	4	3	✅Livre-comércio ❌Sem-estoque-base
+4	4	✅Alinho-Exército ❌Atraso-técnico	8	3	5	Dissuasão Militar	7	4	3	✅Defesa-estratégica ❌Caixa-instável	4	7	4	3	✅Respeito-patente ❌Corte-custeio	6	4	2	✅Tecnologia-defesa ❌Atrito-comandos
+5	5	✅Queda-crimes ❌Letalidade-policial	5	3	2	Ordem Pública	9	5	4	✅Direitos-humanos ❌Crise-urbana	5	8	6	2	✅Vagas-prisões ❌Choque-institutos	9	5	4	✅Intervenção-Estados ❌Letalidade-urbana
+6	4	✅Anti-invasão ❌Veto-reforma	3	5	-2	Garantia Propriedade	10	5	5	✅Diálogo-social ❌Risco-jurídico	4	10	5	5	✅Tolerância-zero ❌Trava-social	8	4	4	✅Titulação-veloz ❌Corte-crédito-agro
+7	5	✅Desoneração-fábrica ❌Primarização-agro	7	4	3	Autonomia Industrial	5	7	-2	✅Nova-Indústria ❌Gargalo-fiscal	5	4	8	-4	✅Marcas-globais ❌Desindustrialização	5	6	-1	✅Startups-tech ❌Baixa-indústria-base
+8	4	✅Peso-global ❌Refém-soja	5	6	-1	Pauta Exportação	5	7	-2	✅Parcerias-amplas ❌Concentração-pauta	4	4	8	-4	✅Eixo-Israel/EUA ❌Foco-commodities	5	7	-2	✅Livre-mercado ❌Sem-indústria-peso
+9	4	✅Refino-mineral ❌Refém-fertilizante	6	4	2	Insumos Importados	4	7	-3	✅Plano-Fertilizantes ❌Reativação-lenta	4	3	8	-5	✅Isenção-compra ❌Zero-autonomia	4	7	-3	✅Compra-aberta ❌Vulnerabilidade
+10	5	✅Anti-ONGs ❌Desgaste-leis	8	2	6	Preservação Amazônia	6	7	-1	✅Queda-desmate ❌Obras-travadas	5	4	9	-5	✅Títulos-campo ❌Boicote-externo	6	5	1	✅Parcerias-verdes ❌Fiscalização-curta
+11	3	✅Foco-econômico ❌Risco-barreiras	9	2	7	Agenda Climática	4	8	-4	✅Liderança-COP30 ❌Trava-licença	3	3	9	-6	✅Descomplica-agro ❌Sanções-Europa	5	6	-1	✅Créditos-carbono ❌Atrito-leis-locais
+12	4	✅Força-estabilidade ❌Repressão-campo	4	5	-1	Conflitos Agrários	8	6	2	✅Mediação-canais ❌Atrito-ruralista	4	8	6	2	✅Ordem-jurídica ❌Choque-MST	8	5	3	✅Rigor-anti-invasão ❌Sem-reforma-campo
+13	3	✅Foco-lucro ❌Perda-isenção	8	3	5	Diplomacia Soft Power	5	6	-1	✅Retorno-Mundo ❌Viés-ideológico	3	4	8	-4	✅Bloco-Ocidental ❌Racha-SulGlobal	6	5	1	✅Aliança-Ocidente ❌Falta-tradição
+14	4	✅Obra-privada ❌Menos-regulação	2	6	-4	Setores Estratégicos	8	6	2	✅Indução-estatal ❌Risco-gerencial	4	8	7	1	✅Concessão-ampla ❌Perda-controle	6	7	-1	✅Privatização-gestão ❌Fim-monopólio
+15	3	✅Regras-estáveis ❌Extrativismo	7	3	4	Investimento Estrangeiro	8	5	3	✅Dólar-sustentável ❌Alarme-fiscal	3	9	4	5	✅Mercado-aberto ❌Envio-lucros	8	4	4	✅Venture-capital ❌Volatilidade
+16	4	✅Austeridade ❌Asfixia-obras	3	5	-2	Estabilidade Fiscal	8	4	4	✅Inclusão-social ❌Meta-estourada	4	8	5	3	✅Redução-máquina ❌Isenção-crônica	9	4	5	✅Teto-rígido-gasto ❌Corte-social-base
+17	4	✅Painéis-policiais ❌Refém-BigTechs	4	6	-2	Soberania de Dados	5	6	-1	✅Regulação-mídia ❌Nuvem-estrangeira	4	3	8	-5	✅Redes-diretas ❌Submissão-plataforma	7	5	2	✅Criptografia-nacional ❌Servidores-fora
+18	4	✅Ensino-técnico ❌Queda-pesquisa	7	4	3	Educação Científica	5	6	-1	✅Verba-federais ❌Caixa-volátil	4	4	7	-3	✅Escolas-cívicas ❌Sucateamento-base	6	5	1	✅Voucher-educativo ❌Fim-ciência-pública
+19	4	✅Biocombustível ❌Lerdeza-solar	8	4	4	Independência Energética	6	5	1	✅Transição-verde ❌Refém-petróleo	4	5	6	-1	✅Combustível-fóssil ❌Atraso-limpa	6	5	1	✅Livre-mercado-luz ❌Falta-foco-fóssil
+20	3	✅Alinho-comercial ❌Trava-esquerda	6	5	1	Alianças Pragmáticas	7	5	2	✅Sul-Global ❌Alinho-autocracia	3	5	7	-2	✅Acordos-EUA/Milei ❌Viés-ideológico	7	5	2	✅Foco-Ocidente ❌Ruído-China
+21	5	✅Pró-ciência/vacina ❌Racha-direita	9	1	8	Gestão Sanitária / Covid	9	5	4	✅Blindagem-SUS ❌Gargalo-pós-crise	5	2	10	-8	✅Liberdade-médica ❌Negacionismo	8	4	4	✅Defesa-protocolos ❌Ruído-privatização
+22	4	✅Pressão Flávio-Vorcaro ❌Perda-base	3	6	-3	Combate à Corrupção	9	6	3	✅Órgãos-ativos ❌Histórico-partido	4	2	9	-7	✅Crítica-Lula ❌Caso-Master/Vorcaro	10	2	8	✅Ataque-Lula-Flávio ❌Processos-partido
+23	5	✅Investimento ❌Aceita-tarifaços	5	4	1	Relação com os EUA	7	9	-2	✅Retaliação-soberana ❌Ruído-Washington	5	7	10	-3	✅Canal-Trump ❌Submissão-tarifária	6	6	0	✅Aliança-comercial ❌Aceita-taxação
+24	4	✅Fato-medicina ❌Redes-partidárias	5	7	-2	Uso de Desinformação	6	8	-2	✅Regras-anti-ódio ❌Hipérbole-palanque	4	2	10	-8	✅Canal-direto ❌Fábrica-fakenews	4	8	-4	✅Combate-negacionismo ❌Redes-agressivas
+25	5	✅Defesa-patrimônio ❌Trava-digital	10	1	9	Defesa Sistema PIX	10	5	5	✅Confronto-EUA/Soberano ❌Sistema-terceiro	5	6	6	0	✅Mantém-fluxo ❌Risco-bancos	8	4	4	✅Proteção-técnica ❌Abertura-cripto
+26	4	✅Ganhos-acordo ❌Sem-foguete-nacional	4	5	-1	Base de Alcântara	7	6	1	✅Defesa-território ❌Mantém-tratado	4	8	5	3	✅Cessão-plena-EUA ❌Perda-autonomia	5	6	-1	✅Uso-comercial ❌Veto-foguete-próprio
+27	5	✅Pré-sal-estatal ❌Cede-gás	1	6	-5	Privatização Petrobras	8	7	1	✅Recompra-ativos ❌Controle-preços	5	6	7	-1	✅Mantém-base ❌Desinveste-refino	4	8	-4	✅Venda-minorias ❌Desmonte-monopólio
+28	5	✅Planta-baterias ❌SerraVerde-EUA	2	6	-4	Terras Raras / Minerais	6	9	-3	✅Exploração-estatal ❌Trava-capital	5	4	10	-6	✅Atração-EUA ❌Cessão-mineral	5	8	-3	✅Indústria-privada ❌Evasão-riquezas
+29	5	✅Controle-área ❌Fim-câmeras	3	6	-3	Letalidade Policial	9	10	-1	✅Uso-proporcional ❌Sem-coordenação	5	9	10	-1	✅Blindagem-tropa ❌Excludente-violência	9	10	-1	✅Choque-facções ❌Letalidade-rua
+30	4	✅Cláusula-pétrea ❌Execução-velada	1	6	-5	Pena de Morte	8	9	-1	✅Direitos-fundamentais ❌Réu-solto	4	5	9	-4	✅Veto-constitucional ❌Discurso-eliminação	6	9	-3	✅Garantia-lei ❌Apoio-repressão-bruta
+31	5	✅Pragmatismo-agro ❌Aceita-taxas	7	5	2	Relação com a China	8	7	1	✅Eixo-BRICS ❌Invasão-produtos	5	7	8	-1	✅Fluxo-grãos ❌Ataques-redes	6	6	0	✅Comércio-aberto ❌Ruído-ideológico
+32	4	✅Crédito-banco ❌Veto-ditaduras	8	2	6	Bloco do BRICS	7	6	1	✅Liderança-banco ❌Racha-Ocidente	4	4	8	-4	✅Uso-comercial ❌Contra-bloco	5	6	-1	✅Canal-crédito ❌Afastamento-ocidental
+33	3	✅Defesa-democracia ❌Isolamento-árabe	3	5	-2	Conflito Israel-Palestina	5	8	-3	✅Dois-Estados ❌Corte-TelAviv	3	4	9	-5	✅Aliança-Netanyahu ❌Racha-Oriente	4	7	-3	✅Postura-pró-Oeste ❌Perda-mercado
+34	3	✅Condena-invasão ❌Uso-palanque	4	5	-1	Guerras / Irã e Rússia	6	7	-1	✅Arbitragem-paz ❌Visão-leniente	3	3	8	-5	✅Alinho-Ocidente ❌Discurso-guerra-fria	5	6	-1	✅Defesa-fronteiras ❌Viés-alinhamento
+35	5	✅Slogan-Ordem ❌Vazio-econômico	7	5	2	Trunfo de Campanha	8	7	1	✅Foco-Fome ❌Modelo-gasto	5	9	7	2	✅Nome-Bolsonaro ❌Divisão-base	8	5	3	✅Choque-Gestão ❌Falta-estrutura-povo
+36	5	✅Trava-populismo ❌Juros-rentistas	2	5	-3	BC Autônomo	8	8	0	✅Defesa-governo ❌Ruído-câmbio	5	10	3	7	✅Autonomia-formal ❌Faria-Lima-forte	9	4	5	✅Moeda-estável ❌Menos-crédito-social
+37	4	✅Importação-insumos ❌Zero-indústria-base	6	4	2	Semicondutores / Chips	4	7	-3	✅Reativa-CEITEC ❌Escala-lenta	4	2	8	-6	✅Compra-global ❌Fim-produção	5	5	0	✅Subsídios-fábricas ❌Lenta-maturation
+38	4	✅Fluxo-privado ❌Pedágio-alto	3	5	-2	Malha Logística	7	7	0	✅Malha-pública ❌Lenta-entrega	4	8	6	2	✅Privatização-total ❌Perda-controle	6	5	1	✅PPPs-infra ❌Tarifa-pedágio
+39	4	✅Reforço-policial ❌Aparelhamento	3	4	-1	Inteligência e Abin	7	5	2	✅Agências-limpas ❌Falha-segurança	4	4	8	-4	✅Proteção-regime ❌Abin-paralela	8	3	5	✅Blindagem-técnica ❌Risco-vigilância
+40	4	✅Atrai-laboratório ❌Risco-Cerrado	7	4	3	Patentes / Biopirataria	5	8	-3	✅Quebra-patentes ❌Proteção-INPI	4	3	8	-5	✅Patente-global ❌Vulnerabilidade	6	5	1	✅Defesa-patentes ❌Risco-biopirataria
+🧮	—	🟦 Foco territorial/fiscal	—	—	1,22	MÉDIA PONDERADA	—	—	0,94	🟥 Foco anticapitalista	—	—	—	-0,32	🟧 Alinhamento de mercado/EUA	—	—	1,02	🟩 Choque técnico liberal

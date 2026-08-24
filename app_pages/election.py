@@ -2,19 +2,20 @@ from __future__ import annotations
 
 import streamlit as st
 
-from src.charts import dimension_profile_chart, ranking_chart
-from src.config import PLOTLY_CONFIG
+from src.charts import dimension_profile_chart, factor_radar_chart, ranking_chart
+from src.config import KEY_FACTOR_IDS, PLOTLY_CONFIG
 from src.data import (
-    candidate_map,
     dimension_scores,
     export_payload,
     json_bytes,
     load_benchmark,
     load_candidates,
+    load_sources,
+    long_scores,
     weighted_scores,
 )
 from src.navigation import go_to
-from src.ui import candidate_card, evidence_notice, hero
+from src.ui import analytic_footer, candidate_card, hero
 
 
 hero(
@@ -31,57 +32,78 @@ with filter_cols[1]:
 with filter_cols[2]:
     st.segmented_control("Distrito", ["Brasil"], default="Brasil", disabled=True)
 
-evidence_notice()
-
 benchmark = load_benchmark()
 candidates = load_candidates()
-candidates_by_slug = candidate_map()
-labels_to_slugs = {f"{c['ballot_name']} · {c['party']}": c["slug"] for c in candidates}
-
-st.subheader("Escolha direta")
-selected_labels = st.pills(
-    "Um nome abre a ficha; dois ou mais habilitam a comparação.",
-    list(labels_to_slugs),
-    selection_mode="multi",
-    key="home_candidate_selection",
-)
-selected_slugs = [labels_to_slugs[label] for label in selected_labels]
-
-action_cols = st.columns([1, 1, 3])
-with action_cols[0]:
-    if st.button(
-        "Ver ficha",
-        icon=":material/person:",
-        type="primary",
-        width="stretch",
-        disabled=len(selected_slugs) != 1,
-    ):
-        go_to("app_pages/profile.py", {"candidato": selected_slugs[0]})
-with action_cols[1]:
-    if st.button(
-        "Comparar",
-        icon=":material/compare_arrows:",
-        width="stretch",
-        disabled=len(selected_slugs) < 2,
-    ):
-        go_to("app_pages/compare.py", {"candidatos": ",".join(selected_slugs)})
-
+all_slugs = [candidate["slug"] for candidate in candidates]
+labels_to_slugs = {f"{candidate['ballot_name']} · {candidate['party']}": candidate["slug"] for candidate in candidates}
 ranking = weighted_scores(benchmark)
 score_lookup = ranking.set_index("slug")["score"].to_dict()
-card_cols = st.columns(len(candidates))
-for column, candidate in zip(card_cols, candidates):
-    with column:
-        candidate_card(candidate, score_lookup[candidate["slug"]])
+dimensions = dimension_scores(benchmark, all_slugs)
+long_frame = long_scores(benchmark, all_slugs)
 
-tab_ranking, tab_dimensions = st.tabs(["Ranking ponderado", "Dimensões estratégicas"])
-with tab_ranking:
-    st.plotly_chart(ranking_chart(ranking), width="stretch", config=PLOTLY_CONFIG)
-with tab_dimensions:
-    dimensions = dimension_scores(benchmark, [c["slug"] for c in candidates])
-    st.plotly_chart(dimension_profile_chart(dimensions), width="stretch", config=PLOTLY_CONFIG)
+body, graph = st.columns([1.08, 0.92], gap="large", vertical_alignment="top")
+with body:
+    st.subheader("Escolha direta")
+    selected_labels = st.pills(
+        "Um nome abre a ficha; dois ou mais habilitam a comparação.",
+        list(labels_to_slugs),
+        selection_mode="multi",
+        key="home_candidate_selection",
+    )
+    selected_slugs = [labels_to_slugs[label] for label in selected_labels]
+    action_cols = st.columns(2)
+    with action_cols[0]:
+        if st.button(
+            "Ver ficha",
+            icon=":material/person:",
+            type="primary",
+            width="stretch",
+            disabled=len(selected_slugs) != 1,
+        ):
+            go_to("app_pages/profile.py", {"candidato": selected_slugs[0]})
+    with action_cols[1]:
+        if st.button(
+            "Comparar",
+            icon=":material/compare_arrows:",
+            width="stretch",
+            disabled=len(selected_slugs) < 2,
+        ):
+            go_to("app_pages/compare.py", {"candidatos": ",".join(selected_slugs)})
 
-st.caption("Use o ícone de câmera na barra do gráfico para baixar PNG em alta resolução.")
-payload = export_payload(benchmark, [c["slug"] for c in candidates])
+    for start in range(0, len(candidates), 2):
+        card_cols = st.columns(2)
+        for column, candidate in zip(card_cols, candidates[start : start + 2]):
+            with column:
+                candidate_card(candidate, score_lookup[candidate["slug"]])
+
+    st.subheader("Resultado calculado")
+    st.dataframe(
+        ranking.rename(
+            columns={"candidate": "Candidato", "party": "Partido", "score": "Média ponderada"}
+        )[["Candidato", "Partido", "Média ponderada"]],
+        hide_index=True,
+        width="stretch",
+    )
+
+with graph:
+    with st.container(key="election_chart_panel"):
+        st.markdown('<div class="bcc-panel-label">Painel gráfico</div>', unsafe_allow_html=True)
+        chart_type = st.segmented_control(
+            "Tipo de gráfico",
+            ["Radar-chave", "Radar por blocos", "Ranking"],
+            default="Radar-chave",
+            key="election_chart_type",
+        )
+        if chart_type == "Radar-chave":
+            figure = factor_radar_chart(long_frame, KEY_FACTOR_IDS, "Fatores estratégicos destacados")
+        elif chart_type == "Radar por blocos":
+            figure = dimension_profile_chart(dimensions, "Perfil por dimensão")
+        else:
+            figure = ranking_chart(ranking)
+        st.plotly_chart(figure, width="stretch", config=PLOTLY_CONFIG)
+        st.caption("Câmera: baixa o gráfico atual em PNG.")
+
+payload = export_payload(benchmark, all_slugs)
 st.download_button(
     "Baixar visão geral em JSON",
     data=json_bytes(payload),
@@ -90,9 +112,12 @@ st.download_button(
     icon=":material/download:",
 )
 
-with st.expander("Como a nota final é calculada"):
-    st.latex(r"\text{média ponderada}=\frac{\sum(\text{nota do fator}\times\text{peso do fator})}{\sum\text{pesos}}")
-    st.write(
-        "Os pesos-base variam de 1 a 5 e resultam de essencialidade, concentração externa, "
-        "tempo de recomposição, efeito sistêmico e exposição à coerção. A simulação detalhada fica na página Comparar."
-    )
+source_keys = {"tse_candidates", "constitution", "defense", "minerals", "ai"}
+analytic_footer(
+    [source for source in load_sources() if source["key"] in source_keys],
+    [
+        "Cadastro e finanças são dados oficiais; notas e pesos são avaliação editorial auditável.",
+        "A pontuação não comprova execução futura nem substitui a leitura dos planos.",
+        "Ausência de dado nunca é convertida automaticamente em nota zero.",
+    ],
+)

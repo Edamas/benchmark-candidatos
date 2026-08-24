@@ -73,7 +73,62 @@ def dimension_profile_chart(dimensions: pd.DataFrame, title: str = "Perfil por d
             "angularaxis": {"gridcolor": GRID, "tickfont": {"size": 11}},
         },
     )
-    return _layout(fig, height=610, margin={"l": 70, "r": 70, "t": 90, "b": 60})
+    fig = _layout(fig, height=610, margin={"l": 70, "r": 70, "t": 76, "b": 96})
+    fig.update_layout(
+        showlegend=dimensions["slug"].nunique() > 1,
+        legend={"orientation": "h", "yanchor": "top", "y": -0.10, "xanchor": "left", "x": 0},
+    )
+    return fig
+
+
+def factor_radar_chart(
+    long_frame: pd.DataFrame,
+    factor_ids: list[int],
+    title: str = "Radar de fatores-chave",
+) -> go.Figure:
+    frame = long_frame[long_frame["id"].isin(factor_ids)].copy()
+    order = {factor_id: position for position, factor_id in enumerate(factor_ids)}
+    frame["_order"] = frame["id"].map(order)
+    short_labels = {
+        28: "Terras<br>raras",
+        25: "Transição<br>energética",
+        15: "Indústria<br>nacional",
+        32: "Ferrovias<br>e logística",
+    }
+    frame["axis_label"] = frame.apply(
+        lambda row: short_labels.get(int(row["id"]), row["factor"]),
+        axis=1,
+    )
+    fig = go.Figure()
+    for slug, group in frame.sort_values("_order").groupby("slug", sort=False):
+        fig.add_trace(
+            go.Scatterpolar(
+                r=group["score"],
+                theta=group["axis_label"],
+                name=group["candidate"].iloc[0],
+                mode="lines+markers",
+                line={"color": CANDIDATE_COLORS.get(slug), "width": 3},
+                marker={"size": 8},
+                fill="toself" if frame["slug"].nunique() == 1 else None,
+                opacity=0.78,
+                customdata=group[["factor"]],
+                hovertemplate="<b>%{customdata[0]}</b><br>%{r:.1f}/10<extra>%{fullData.name}</extra>",
+            )
+        )
+    fig.update_layout(
+        title={"text": title, "x": 0},
+        polar={
+            "bgcolor": PAPER,
+            "radialaxis": {"range": [0, 10], "dtick": 2, "gridcolor": GRID},
+            "angularaxis": {"gridcolor": GRID, "tickfont": {"size": 11}},
+        },
+    )
+    fig = _layout(fig, height=550, margin={"l": 58, "r": 58, "t": 72, "b": 96})
+    fig.update_layout(
+        showlegend=frame["slug"].nunique() > 1,
+        legend={"orientation": "h", "yanchor": "top", "y": -0.11, "xanchor": "left", "x": 0},
+    )
+    return fig
 
 
 def score_heatmap(long_frame: pd.DataFrame, title: str = "Notas fator a fator") -> go.Figure:
@@ -123,6 +178,32 @@ def contribution_chart(factor_table: pd.DataFrame, candidate_name: str) -> go.Fi
     fig.update_xaxes(title="Nota × peso", gridcolor=GRID)
     fig.update_yaxes(title="", automargin=True)
     return _layout(fig, height=520, margin={"l": 12, "r": 24, "t": 65, "b": 46})
+
+
+def individual_scores_chart(factor_table: pd.DataFrame, candidate_name: str) -> go.Figure:
+    frame = factor_table[factor_table["Bloco"] != "RESUMO"].copy()
+    frame = frame.sort_values(["Bloco", "ID"], ascending=[True, False])
+    colors = [
+        "#0B6654" if score >= 7 else "#C79A2B" if score >= 5 else "#A64B55"
+        for score in frame["Nota"]
+    ]
+    fig = go.Figure(
+        go.Bar(
+            x=frame["Nota"],
+            y=frame["Fator"],
+            orientation="h",
+            marker={"color": colors, "line": {"width": 0}},
+            customdata=frame[["Peso", "Bloco", "Evidência"]],
+            hovertemplate=(
+                "<b>%{y}</b><br>Nota %{x:.0f}/10 · peso %{customdata[0]:.0f}"
+                "<br>%{customdata[1]}<br>%{customdata[2]}<extra></extra>"
+            ),
+        )
+    )
+    fig.update_layout(title={"text": f"Notas por fator · {candidate_name}", "x": 0})
+    fig.update_xaxes(title="Nota (0–10)", range=[0, 10.3], dtick=2, gridcolor=GRID)
+    fig.update_yaxes(title="", automargin=True, tickfont={"size": 10})
+    return _layout(fig, height=max(700, len(frame) * 21 + 120), margin={"l": 18, "r": 18, "t": 65, "b": 42})
 
 
 def factor_comparison_chart(long_frame: pd.DataFrame, factor_ids: list[int]) -> go.Figure:

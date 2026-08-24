@@ -45,7 +45,22 @@ def inject_css() -> None:
         div[data-testid="stDataFrame"] { border: 1px solid rgba(11,102,84,.12); border-radius: 14px; overflow: hidden; }
         .stButton button, .stDownloadButton button { font-weight: 680; }
         .bcc-source { color: #52635c; font-size: .84rem; }
-        @media (max-width: 720px) { .bcc-hero h1 { font-size: 2.15rem; } .bcc-card { min-height: auto; } }
+        .bcc-panel-label { color: var(--bcc-green); text-transform: uppercase; letter-spacing: .11em;
+          font-size: .72rem; font-weight: 750; margin: .15rem 0 .2rem; }
+        @media (min-width: 901px) {
+          .st-key-election_chart_panel,
+          .st-key-profile_chart_panel,
+          .st-key-compare_chart_panel,
+          .st-key-candidates_chart_panel { position: sticky; top: 3.5rem; align-self: flex-start; }
+        }
+        @media (max-width: 900px) {
+          .bcc-hero h1 { font-size: 2.15rem; }
+          .bcc-card { min-height: auto; }
+          .st-key-election_chart_panel,
+          .st-key-profile_chart_panel,
+          .st-key-compare_chart_panel,
+          .st-key-candidates_chart_panel { position: static; }
+        }
         </style>
         """,
         unsafe_allow_html=True,
@@ -96,6 +111,34 @@ def evidence_notice() -> None:
         """,
         unsafe_allow_html=True,
     )
+
+
+def analytic_footer(
+    sources: list[dict],
+    observations: list[str] | None = None,
+    *,
+    plan_url: str | None = None,
+) -> None:
+    st.divider()
+    st.subheader("Metodologia, fontes e observações")
+    with st.expander("Metodologia e fórmula"):
+        st.latex(
+            r"\text{média ponderada}=\frac{\sum(\text{nota do fator}\times\text{peso do fator})}{\sum\text{pesos}}"
+        )
+        st.write(
+            "Os pesos-base decorrem de essencialidade, concentração externa, tempo de recomposição, "
+            "efeito sistêmico e exposição à coerção. Ideologia, popularidade e expectativa eleitoral não alteram o peso."
+        )
+        st.markdown("[Abrir metodologia completa →](./methodology)")
+    with st.expander("Fontes desta análise"):
+        if plan_url:
+            st.link_button("Plano oficial no TSE", plan_url, icon=":material/open_in_new:")
+        for source in sources:
+            st.markdown(f"- [{source['title']}]({source['url']}) — {source.get('use', source.get('type', 'Fonte'))}")
+    with st.expander("Observações e limites"):
+        evidence_notice()
+        for observation in observations or []:
+            st.markdown(f"- {observation}")
 
 
 def format_score(value: float) -> str:

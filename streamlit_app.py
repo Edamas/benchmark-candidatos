@@ -32,7 +32,7 @@ pages = {
     "Explorar": [
         page("app_pages/election.py", title="Eleição", icon=":material/how_to_vote:", default=True),
         page("app_pages/candidates.py", title="Candidatos", icon=":material/groups:"),
-        page("app_pages/profile.py", title="Ficha do candidato", icon=":material/person:", hidden=True),
+        page("app_pages/profile.py", title="Ficha do candidato", icon=":material/person:"),
         page("app_pages/compare.py", title="Comparar", icon=":material/compare_arrows:"),
         page("app_pages/parties.py", title="Partidos", icon=":material/account_balance:"),
     ],

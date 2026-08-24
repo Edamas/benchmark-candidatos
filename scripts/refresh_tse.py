@@ -6,6 +6,7 @@ never erased on failure, so the app cannot turn a network error into a factual z
 from __future__ import annotations
 
 import argparse
+from datetime import date
 import io
 import json
 import sys
@@ -33,6 +34,10 @@ def normalized(value: object) -> str:
 
 def download_zip(url: str, max_bytes: int = 700_000_000) -> zipfile.ZipFile:
     response = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=90, stream=True)
+    if response.status_code == 403 and url.startswith("https://cdn.tse.jus.br/"):
+        response.close()
+        fallback = "http://" + url.removeprefix("https://")
+        response = requests.get(fallback, headers={"User-Agent": USER_AGENT}, timeout=90, stream=True)
     response.raise_for_status()
     body = io.BytesIO()
     for chunk in response.iter_content(1024 * 1024):
@@ -90,8 +95,13 @@ def refresh_candidates() -> tuple[pd.DataFrame, dict[str, str]]:
         "DS_OCUPACAO",
         "DS_COR_RACA",
         "DS_GENERO",
+        "DT_NASCIMENTO",
+        "SG_UF_NASCIMENTO",
+        "NM_COLIGACAO",
     ]
     selected = selected[[column for column in columns if column in selected.columns]]
+    selected["snapshot_date"] = date.today().isoformat()
+    selected["source_url"] = URLS["candidates"]
     selected.to_csv(DATA_DIR / "tse_candidates_snapshot.csv", index=False, encoding="utf-8-sig")
     sequence_to_slug = {
         str(row.SQ_CANDIDATO): row.candidate_slug

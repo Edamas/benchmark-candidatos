@@ -5,9 +5,13 @@ import math
 from src.data import (
     candidate_table_with_summary,
     load_benchmark,
+    load_candidates,
+    load_tse_candidates,
     original_candidate_table_with_summary,
+    overview_scores,
     weighted_scores,
 )
+from src.radar import radar_options
 
 
 def test_lula_us_score_is_revised_to_nine():
@@ -65,3 +69,42 @@ def test_revised_table_exposes_a_clickable_primary_source():
     table = candidate_table_with_summary(load_benchmark(), "lula")
     assert "URL da fonte" in table.columns
     assert table.iloc[:-1]["URL da fonte"].str.startswith("https://").all()
+
+
+def test_overview_radar_represents_all_forty_factors():
+    benchmark = load_benchmark()
+    overview = overview_scores(benchmark, ["lula", "caiado"])
+    assert overview["block"].nunique() == 9
+    for slug, rows in overview.groupby("slug"):
+        assert rows["factor_count"].sum() == len(benchmark) == 40
+        assert rows["score"].between(0, 10).all(), slug
+
+
+def test_echarts_overview_radar_keeps_nine_axes_and_filled_series():
+    benchmark = load_benchmark()
+    overview = overview_scores(benchmark, ["lula", "caiado"])
+    options = radar_options(overview, "Visão geral")
+    assert len(options["radar"]["indicator"]) == 9
+    assert len(options["series"][0]["data"]) == 2
+    assert all(len(series["value"]) == 9 for series in options["series"][0]["data"])
+    assert all(series["areaStyle"]["opacity"] > 0 for series in options["series"][0]["data"])
+    assert options["toolbox"]["feature"]["saveAsImage"]["title"] == "Baixar PNG"
+
+
+def test_official_tse_snapshot_contains_all_thirteen_presidential_requests():
+    candidates = load_candidates()
+    snapshot = load_tse_candidates()
+    assert len(candidates) == 13
+    assert len(snapshot) == 13
+    assert {candidate["slug"] for candidate in candidates} == set(snapshot["candidate_slug"])
+    assert {13, 14, 16, 21, 22, 27, 28, 29, 30, 35, 55, 70, 80} == {
+        int(candidate["number"]) for candidate in candidates
+    }
+
+
+def test_four_requested_topics_are_exclusive_factors_not_a_special_chart():
+    benchmark = load_benchmark()
+    factors = set(benchmark["factor"])
+    assert {"Indústria nacional", "Transição energética", "Terras raras e minerais críticos", "Ferrovias"} <= factors
+    assert "Transição e segurança energética" not in factors
+    assert "Portos, ferrovias, rodovias e cabotagem" not in factors

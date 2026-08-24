@@ -32,6 +32,22 @@ WEIGHT_COMPONENTS = [
     "coercion_exposure",
 ]
 
+BLOCK_TO_OVERVIEW = {
+    "Defesa e território": "Defesa e território",
+    "Diplomacia": "Diplomacia",
+    "Abastecimento": "Abastecimento",
+    "Economia produtiva": "Economia e finanças",
+    "Finanças": "Economia e finanças",
+    "Tecnologia": "Tecnologia",
+    "Energia e recursos": "Energia e recursos",
+    "Território e ambiente": "Território e ambiente",
+    "Território e recursos": "Território e ambiente",
+    "Infraestrutura": "Infraestrutura e indústria",
+    "Política industrial": "Infraestrutura e indústria",
+    "Resiliência": "Resiliência e instituições",
+    "Instituições": "Resiliência e instituições",
+}
+
 # Correspondências temáticas de alta confiança entre a planilha original e a
 # taxonomia revisada. A tabela original permanece preservada integralmente.
 CURRENT_TO_ORIGINAL = {
@@ -107,6 +123,13 @@ def load_finance() -> pd.DataFrame:
 
 
 @st.cache_data(show_spinner=False)
+def load_tse_candidates() -> pd.DataFrame:
+    """Load the compact presidential snapshot exactly as published by the TSE."""
+    path = DATA_DIR / "tse_candidates_snapshot.csv"
+    return pd.read_csv(path, dtype=str, keep_default_na=False)
+
+
+@st.cache_data(show_spinner=False)
 def load_original_basis() -> pd.DataFrame:
     raw = pd.read_csv(
         DATA_DIR / "original_basis.tsv",
@@ -154,6 +177,18 @@ def candidate_map() -> dict[str, dict]:
     return {candidate["slug"]: candidate for candidate in load_candidates()}
 
 
+def scored_slugs() -> list[str]:
+    """Candidates with a completed, column-by-column editorial assessment."""
+    available = candidate_map()
+    return [slug for slug in SCORE_COLUMNS if slug in available]
+
+
+def candidate_official_record(slug: str) -> dict:
+    snapshot = load_tse_candidates()
+    rows = snapshot[snapshot["candidate_slug"] == slug]
+    return rows.iloc[0].to_dict() if not rows.empty else {}
+
+
 def normalize_weights(
     benchmark: pd.DataFrame,
     custom_weights: Mapping[int, float] | None = None,
@@ -171,7 +206,8 @@ def weighted_scores(
     slugs: Iterable[str] | None = None,
     custom_weights: Mapping[int, float] | None = None,
 ) -> pd.DataFrame:
-    selected = list(slugs or SCORE_COLUMNS.keys())
+    requested = scored_slugs() if slugs is None else list(slugs)
+    selected = [slug for slug in requested if slug in SCORE_COLUMNS]
     weights = normalize_weights(benchmark, custom_weights)
     denominator = weights.sum()
     rows: list[dict] = []
@@ -187,6 +223,8 @@ def weighted_scores(
                 "score": round(score, 2),
             }
         )
+    if not rows:
+        return pd.DataFrame(columns=["slug", "candidate", "party", "score"])
     return pd.DataFrame(rows).sort_values("score", ascending=False, ignore_index=True)
 
 
@@ -201,6 +239,8 @@ def dimension_scores(
     candidates = candidate_map()
     result: list[dict] = []
     for slug in slugs:
+        if slug not in SCORE_COLUMNS:
+            continue
         working["_score"] = benchmark[SCORE_COLUMNS[slug]].astype(float)
         for block, group in working.groupby("block", sort=False):
             denom = group["_weight"].sum()
@@ -216,10 +256,47 @@ def dimension_scores(
     return pd.DataFrame(result)
 
 
+def overview_scores(
+    benchmark: pd.DataFrame,
+    slugs: Iterable[str],
+    custom_weights: Mapping[int, float] | None = None,
+) -> pd.DataFrame:
+    """Aggregate all benchmark rows into nine readable radar axes."""
+    weights = normalize_weights(benchmark, custom_weights)
+    working = benchmark[["block", "id"]].copy()
+    working["overview"] = working["block"].map(BLOCK_TO_OVERVIEW)
+    if working["overview"].isna().any():
+        missing = sorted(working.loc[working["overview"].isna(), "block"].unique())
+        raise ValueError(f"Blocos sem dimensão geral: {missing}")
+    working["_weight"] = weights
+    candidates = candidate_map()
+    result: list[dict] = []
+    for slug in slugs:
+        if slug not in SCORE_COLUMNS:
+            continue
+        working["_score"] = benchmark[SCORE_COLUMNS[slug]].astype(float)
+        for overview, group in working.groupby("overview", sort=False):
+            denominator = group["_weight"].sum()
+            value = (group["_score"] * group["_weight"]).sum() / denominator if denominator else float("nan")
+            result.append(
+                {
+                    "slug": slug,
+                    "candidate": candidates[slug]["ballot_name"],
+                    "block": overview,
+                    "score": round(float(value), 2),
+                    "factor_count": int(len(group)),
+                    "weight_sum": float(denominator),
+                }
+            )
+    return pd.DataFrame(result)
+
+
 def long_scores(benchmark: pd.DataFrame, slugs: Iterable[str]) -> pd.DataFrame:
     candidates = candidate_map()
     rows: list[dict] = []
     for slug in slugs:
+        if slug not in SCORE_COLUMNS:
+            continue
         for row in benchmark.itertuples(index=False):
             rows.append(
                 {

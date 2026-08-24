@@ -12,6 +12,77 @@ GRID = "rgba(67,88,78,.16)"
 INK = "#24362E"
 MUTED = "#5B6C64"
 
+CANDIDATE_SYMBOLS = {
+    "lula": "circle",
+    "caiado": "diamond",
+    "flavio": "square",
+    "renan": "triangle-up",
+}
+
+RADAR_LABELS = {
+    "Defesa e território": "Defesa e<br>território",
+    "Diplomacia": "Diplomacia",
+    "Abastecimento": "Abasteci<br>mento",
+    "Economia e finanças": "Economia e<br>finanças",
+    "Economia produtiva": "Economia<br>produtiva",
+    "Finanças": "Finanças",
+    "Tecnologia": "Tecnologia",
+    "Energia e recursos": "Energia e<br>recursos",
+    "Território e ambiente": "Território e<br>ambiente",
+    "Infraestrutura e indústria": "Infraestrutura<br>e indústria",
+    "Infraestrutura": "Infraestrutura",
+    "Política industrial": "Política<br>industrial",
+    "Resiliência e instituições": "Resiliência e<br>instituições",
+    "Resiliência": "Resiliência",
+    "Território e recursos": "Território e<br>recursos",
+    "Instituições": "Instituições",
+}
+
+
+def _rgba(hex_color: str, alpha: float) -> str:
+    value = hex_color.lstrip("#")
+    red, green, blue = (int(value[index : index + 2], 16) for index in (0, 2, 4))
+    return f"rgba({red},{green},{blue},{alpha})"
+
+
+def _radar_layout(fig: go.Figure, *, title: str, series_count: int, height: int = 580) -> go.Figure:
+    fig.update_layout(
+        title={"text": title, "x": 0, "y": 0.98, "font": {"size": 18}},
+        polar={
+            "bgcolor": "rgba(255,255,255,.34)",
+            "domain": {"x": [0.04, 0.96], "y": [0.04, 0.96]},
+            "radialaxis": {
+                "range": [0, 10],
+                "tickvals": [2, 4, 6, 8, 10],
+                "angle": 45,
+                "gridcolor": "rgba(67,88,78,.18)",
+                "linecolor": "rgba(67,88,78,.22)",
+                "tickfont": {"color": MUTED, "size": 10},
+                "ticks": "",
+            },
+            "angularaxis": {
+                "rotation": 90,
+                "direction": "clockwise",
+                "gridcolor": "rgba(67,88,78,.13)",
+                "linecolor": "rgba(67,88,78,.30)",
+                "tickfont": {"size": 11, "color": INK},
+            },
+        },
+    )
+    fig = _layout(fig, height=height, margin={"l": 66, "r": 66, "t": 76, "b": 92})
+    fig.update_layout(
+        showlegend=series_count > 1,
+        legend={
+            "orientation": "h",
+            "yanchor": "top",
+            "y": -0.10,
+            "xanchor": "center",
+            "x": 0.5,
+            "font": {"size": 12},
+        },
+    )
+    return fig
+
 
 def _layout(fig: go.Figure, *, height: int = 430, margin: dict | None = None) -> go.Figure:
     fig.update_layout(
@@ -50,85 +121,73 @@ def ranking_chart(ranking: pd.DataFrame, title: str = "Índice ponderado de sobe
 def dimension_profile_chart(dimensions: pd.DataFrame, title: str = "Perfil por dimensão") -> go.Figure:
     fig = go.Figure()
     blocks = dimensions["block"].drop_duplicates().tolist()
+    series_count = dimensions["slug"].nunique()
     for slug, group in dimensions.groupby("slug", sort=False):
         ordered = group.set_index("block").reindex(blocks).reset_index()
+        axis_labels = ordered["block"].map(RADAR_LABELS).fillna(ordered["block"])
+        factor_count = ordered["factor_count"] if "factor_count" in ordered else pd.Series([pd.NA] * len(ordered))
+        hover = (
+            "<b>%{customdata[0]}</b><br>%{r:.2f}/10"
+            "<br>%{customdata[1]} fatores agregados<extra>%{fullData.name}</extra>"
+            if "factor_count" in ordered
+            else "<b>%{customdata[0]}</b><br>%{r:.2f}/10<extra>%{fullData.name}</extra>"
+        )
+        color = CANDIDATE_COLORS.get(slug, "#0B6654")
         fig.add_trace(
             go.Scatterpolar(
                 r=ordered["score"],
-                theta=ordered["block"],
+                theta=axis_labels,
                 name=ordered["candidate"].iloc[0],
                 mode="lines+markers",
-                line={"color": CANDIDATE_COLORS.get(slug), "width": 2.5},
-                marker={"size": 7, "symbol": "circle"},
-                fill="toself" if dimensions["slug"].nunique() == 1 else None,
-                opacity=0.76,
-                hovertemplate="<b>%{theta}</b><br>%{r:.2f}/10<extra>%{fullData.name}</extra>",
+                line={"color": color, "width": 3},
+                marker={
+                    "size": 7,
+                    "symbol": CANDIDATE_SYMBOLS.get(slug, "circle"),
+                    "color": color,
+                    "line": {"color": "#F6F7F2", "width": 1.2},
+                },
+                fill="toself",
+                fillcolor=_rgba(color, 0.20 if series_count == 1 else 0.13),
+                customdata=pd.DataFrame({"block": ordered["block"], "factor_count": factor_count}),
+                hovertemplate=hover,
             )
         )
-    fig.update_layout(
-        title={"text": title, "x": 0},
-        polar={
-            "bgcolor": PAPER,
-            "radialaxis": {"range": [0, 10], "dtick": 2, "gridcolor": GRID, "tickfont": {"color": MUTED}},
-            "angularaxis": {"gridcolor": GRID, "tickfont": {"size": 11}},
-        },
-    )
-    fig = _layout(fig, height=610, margin={"l": 70, "r": 70, "t": 76, "b": 96})
-    fig.update_layout(
-        showlegend=dimensions["slug"].nunique() > 1,
-        legend={"orientation": "h", "yanchor": "top", "y": -0.10, "xanchor": "left", "x": 0},
-    )
-    return fig
+    return _radar_layout(fig, title=title, series_count=series_count, height=590)
 
 
 def factor_radar_chart(
     long_frame: pd.DataFrame,
     factor_ids: list[int],
-    title: str = "Radar de fatores-chave",
+    title: str = "Radar de fatores selecionados",
 ) -> go.Figure:
     frame = long_frame[long_frame["id"].isin(factor_ids)].copy()
     order = {factor_id: position for position, factor_id in enumerate(factor_ids)}
     frame["_order"] = frame["id"].map(order)
-    short_labels = {
-        28: "Terras<br>raras",
-        25: "Transição<br>energética",
-        15: "Indústria<br>nacional",
-        32: "Ferrovias<br>e logística",
-    }
-    frame["axis_label"] = frame.apply(
-        lambda row: short_labels.get(int(row["id"]), row["factor"]),
-        axis=1,
-    )
+    frame["axis_label"] = frame["factor"].map(lambda value: str(value).replace(" ", "<br>", 1))
     fig = go.Figure()
+    series_count = frame["slug"].nunique()
     for slug, group in frame.sort_values("_order").groupby("slug", sort=False):
+        color = CANDIDATE_COLORS.get(slug, "#0B6654")
         fig.add_trace(
             go.Scatterpolar(
                 r=group["score"],
                 theta=group["axis_label"],
                 name=group["candidate"].iloc[0],
                 mode="lines+markers",
-                line={"color": CANDIDATE_COLORS.get(slug), "width": 3},
-                marker={"size": 8},
-                fill="toself" if frame["slug"].nunique() == 1 else None,
-                opacity=0.78,
+                line={"color": color, "width": 3},
+                marker={
+                    "size": 8,
+                    "symbol": CANDIDATE_SYMBOLS.get(slug, "circle"),
+                    "color": color,
+                    "line": {"color": "#F6F7F2", "width": 1.2},
+                },
+                fill="toself",
+                fillcolor=_rgba(color, 0.22 if series_count == 1 else 0.14),
                 customdata=group[["factor"]],
                 hovertemplate="<b>%{customdata[0]}</b><br>%{r:.1f}/10<extra>%{fullData.name}</extra>",
             )
         )
-    fig.update_layout(
-        title={"text": title, "x": 0},
-        polar={
-            "bgcolor": PAPER,
-            "radialaxis": {"range": [0, 10], "dtick": 2, "gridcolor": GRID},
-            "angularaxis": {"gridcolor": GRID, "tickfont": {"size": 11}},
-        },
-    )
-    fig = _layout(fig, height=550, margin={"l": 58, "r": 58, "t": 72, "b": 96})
-    fig.update_layout(
-        showlegend=frame["slug"].nunique() > 1,
-        legend={"orientation": "h", "yanchor": "top", "y": -0.11, "xanchor": "left", "x": 0},
-    )
-    return fig
+    return _radar_layout(fig, title=title, series_count=series_count, height=570)
 
 
 def score_heatmap(long_frame: pd.DataFrame, title: str = "Notas fator a fator") -> go.Figure:

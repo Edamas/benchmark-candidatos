@@ -8,13 +8,21 @@ APP_TITLE = "Benchmark de Candidatos"
 BRAND = "Brasil Com Censo"
 TAGLINE = "Dados para escolher com autonomia"
 SNAPSHOT_DATE = "2026-08-24"
-KEY_FACTOR_IDS = [28, 25, 15, 32]
 
 CANDIDATE_COLORS = {
     "lula": "#C33A46",
     "caiado": "#0B6654",
     "flavio": "#2858A5",
     "renan": "#7A4C9E",
+    "hertz": "#D97706",
+    "edmilson": "#8B1E3F",
+    "clariana": "#B45309",
+    "pablo": "#4F46E5",
+    "rui": "#991B1B",
+    "zema": "#2563EB",
+    "wilson": "#0F766E",
+    "augusto": "#9333EA",
+    "samara": "#BE185D",
 }
 
 PLOTLY_CONFIG = {

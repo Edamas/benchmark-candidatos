@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import streamlit as st
 
-from src.charts import dimension_profile_chart, factor_radar_chart, ranking_chart
-from src.config import KEY_FACTOR_IDS, PLOTLY_CONFIG
-from src.data import dimension_scores, load_benchmark, load_candidates, load_sources, long_scores, weighted_scores
-from src.navigation import go_to
+from src.charts import ranking_chart
+from src.config import PLOTLY_CONFIG
+from src.data import load_benchmark, load_candidates, load_sources, overview_scores, scored_slugs, weighted_scores
+from src.radar import render_radar
 from src.ui import analytic_footer, candidate_card, hero
 
 
@@ -16,11 +16,10 @@ hero(
 
 candidates = load_candidates()
 benchmark = load_benchmark()
-all_slugs = [candidate["slug"] for candidate in candidates]
-ranking = weighted_scores(benchmark)
+all_slugs = scored_slugs()
+ranking = weighted_scores(benchmark, all_slugs)
 ranking_index = ranking.set_index("slug")
-dimensions = dimension_scores(benchmark, all_slugs)
-long_frame = long_scores(benchmark, all_slugs)
+overview = overview_scores(benchmark, all_slugs)
 
 party_options = ["Todos", *sorted({candidate["party"] for candidate in candidates})]
 selected_party = st.pills("Partido", party_options, default="Todos")
@@ -32,39 +31,37 @@ filtered = [
     and (not query or query.casefold() in candidate["full_name"].casefold() or query.casefold() in candidate["ballot_name"].casefold())
 ]
 
-body, graph = st.columns([1.08, 0.92], gap="large", vertical_alignment="top")
+body, graph = st.columns([0.96, 1.04], gap="large", vertical_alignment="top")
 with body:
     if not filtered:
         st.info("Nenhum candidato corresponde aos filtros.")
     for candidate in filtered:
-        candidate_card(candidate, float(ranking_index.loc[candidate["slug"], "score"]))
+        score = float(ranking_index.loc[candidate["slug"], "score"]) if candidate["slug"] in ranking_index.index else None
+        candidate_card(candidate, score)
         st.write(candidate["summary"])
-        if st.button(
+        st.link_button(
             f"Abrir ficha de {candidate['ballot_name']}",
-            key=f"profile_{candidate['slug']}",
+            f"./presidencia-{candidate['slug']}",
             icon=":material/arrow_forward:",
             width="stretch",
-        ):
-            go_to("app_pages/profile.py", {"candidato": candidate["slug"]})
+        )
 
 with graph:
     with st.container(key="candidates_chart_panel"):
         st.markdown('<div class="bcc-panel-label">Painel gráfico</div>', unsafe_allow_html=True)
         chart_type = st.segmented_control(
             "Tipo de gráfico",
-            ["Radar-chave", "Radar por blocos", "Ranking"],
-            default="Radar-chave",
-            key="candidates_chart_type",
+            ["Radar geral", "Ranking"],
+            default="Radar geral",
+            key="candidates_chart_type_v3",
         )
-        if chart_type == "Radar-chave":
-            figure = factor_radar_chart(long_frame, KEY_FACTOR_IDS, "Fatores estratégicos")
-        elif chart_type == "Radar por blocos":
-            figure = dimension_profile_chart(dimensions, "Dimensões estratégicas")
+        if chart_type == "Radar geral":
+            render_radar(overview, "Visão geral · 40 fatores", key="candidates_radar")
         else:
-            figure = ranking_chart(ranking)
-        st.plotly_chart(figure, width="stretch", config=PLOTLY_CONFIG)
+            st.plotly_chart(ranking_chart(ranking), width="stretch", config=PLOTLY_CONFIG)
+        st.caption("Todos os 40 fatores participam do radar geral.")
 
 analytic_footer(
     [source for source in load_sources() if source["key"] in {"tse_candidates", "constitution"}],
-    ["A lista inicial é um recorte editorial; a situação cadastral deve ser confirmada no TSE."],
+    ["A lista reproduz os 13 pedidos do snapshot do TSE; a situação judicial deve ser confirmada no DivulgaCandContas."],
 )

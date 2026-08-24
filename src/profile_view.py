@@ -110,7 +110,11 @@ def render_candidate_profile(slug_override: str | None = None) -> None:
         score = float(ranking.iloc[0]["score"])
         overview = overview_scores(benchmark, [slug])
         full_table = candidate_table_with_summary(benchmark, slug)
-        original_table = original_candidate_table_with_summary(slug)
+        original_table = (
+            original_candidate_table_with_summary(slug)
+            if slug in {"lula", "renan", "flavio", "caiado"}
+            else pd.DataFrame()
+        )
     else:
         score = None
         overview = pd.DataFrame()
@@ -136,20 +140,14 @@ def render_candidate_profile(slug_override: str | None = None) -> None:
         with section_tabs[0]:
             if evaluated:
                 st.subheader("Fatores, pesos, notas e fundamentos")
-                st.write("A média ponderada é a última linha. Prós e contras preservam a base recebida; a nota revisada e o fundamento ficam ao lado.")
-                display = full_table.rename(
-                    columns={
-                        "Prós (base)": "Prós",
-                        "Contras (base)": "Contras",
-                        "Nota prós (base)": "Nota prós",
-                        "Nota contras (base)": "Nota contras",
-                        "Saldo do fator (base)": "Saldo do fator",
-                        "Nota": "Nota revisada",
-                    }
+                st.write(
+                    "A média ponderada é a última linha. Nota prós é a nota de autonomia; nota contras é seu "
+                    "complemento até 10; o saldo varia de −10 a +10. Páginas indicam onde a proposta foi localizada."
                 )
+                display = full_table.copy()
                 visible = [
                     "Fator", "Peso", "Prós", "Contras", "Nota prós", "Nota contras",
-                    "Saldo do fator", "Fonte(s)", "Nota revisada", "Evidência", "URL da fonte", "Fundamento",
+                    "Saldo do fator", "Fonte(s)", "Evidência", "Confiança", "URL da fonte", "Fundamento",
                 ]
                 st.dataframe(
                     display[visible],
@@ -172,8 +170,9 @@ def render_candidate_profile(slug_override: str | None = None) -> None:
                     json_bytes({"candidate": candidate, "official": record, "weighted_score": score, "factors": display.to_dict("records")}),
                     f"{slug}-ficha.json", "application/json", icon=":material/download:", width="stretch",
                 )
-                with st.expander("Base original preservada"):
-                    st.dataframe(original_table, hide_index=True, width="stretch", height=520)
+                if not original_table.empty:
+                    with st.expander("Base original preservada"):
+                        st.dataframe(original_table, hide_index=True, width="stretch", height=520)
             else:
                 st.info("Avaliação fator a fator pendente de pesquisa e revisão documental.")
         with section_tabs[1]:

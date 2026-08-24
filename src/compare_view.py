@@ -77,8 +77,8 @@ def render_compare_view(view: str = "overview") -> None:
     evaluated_slugs = [slug for slug in selected_slugs if slug in SCORE_COLUMNS]
     pending_slugs = [slug for slug in selected_slugs if slug not in SCORE_COLUMNS]
     st.caption(
-        f"{len(selected_slugs)} pedidos selecionados · {len(evaluated_slugs)} com avaliação concluída · "
-        f"{len(pending_slugs)} sem notas presumidas. Todos os 13 vêm selecionados por padrão."
+        f"{len(selected_slugs)} pedidos selecionados · {len(evaluated_slugs)} com matriz de 40 fatores · "
+        f"{len(pending_slugs)} pendentes. Todos os 13 vêm selecionados por padrão."
     )
     if pending_slugs:
         pending_names = ", ".join(by_slug[slug]["ballot_name"] for slug in pending_slugs)
@@ -121,7 +121,7 @@ def render_compare_view(view: str = "overview") -> None:
             st.subheader("Cadastro oficial comparado")
             st.dataframe(_official_comparison(selected_slugs), hide_index=True, width="stretch", height=470)
             if not ranking.empty:
-                st.subheader("Média ponderada · avaliações concluídas")
+                st.subheader("Média ponderada · 40 fatores")
                 st.dataframe(
                     ranking.rename(columns={"candidate": "Candidato", "party": "Partido", "score": "Média ponderada"})[
                         ["Candidato", "Partido", "Média ponderada"]
@@ -187,14 +187,14 @@ def render_compare_view(view: str = "overview") -> None:
             else:
                 render_radar(overview, "Visão geral · 40 fatores", key="compare_overview_radar")
                 st.plotly_chart(ranking_chart(ranking, "Média ponderada"), width="stretch", config=PLOTLY_CONFIG)
-            st.caption("Somente avaliações concluídas são traçadas; os demais registros continuam visíveis nas tabelas.")
+            st.caption("Nota 5 representa neutralidade, ambiguidade ou evidência insuficiente; não equivale a apoio documental.")
 
     analytic_footer(
         [source for source in load_sources() if source["key"] in {"tse_candidates", "constitution", "defense", "minerals", "ai"}],
         [
             "Todos os 13 pedidos de candidatura são selecionados por padrão.",
             "O radar geral agrega todos os 40 fatores em nove dimensões; o radar por fatores não privilegia quatro temas.",
-            "Ausência de avaliação não é convertida em nota zero.",
+            "Ausência de posição localizada mantém a nota neutra em 5 e não é convertida em zero.",
             "A média ponderada é a última linha das tabelas de notas.",
         ],
     )

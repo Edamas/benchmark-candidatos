@@ -3,12 +3,17 @@ from __future__ import annotations
 import math
 
 from src.data import (
+    EVIDENCE_COLUMNS,
+    SCORE_COLUMNS,
     candidate_table_with_summary,
+    export_payload,
+    load_assessments,
     load_benchmark,
     load_candidates,
     load_tse_candidates,
     original_candidate_table_with_summary,
     overview_scores,
+    scored_slugs,
     weighted_scores,
 )
 from src.radar import radar_options
@@ -108,3 +113,62 @@ def test_four_requested_topics_are_exclusive_factors_not_a_special_chart():
     assert {"Indústria nacional", "Transição energética", "Terras raras e minerais críticos", "Ferrovias"} <= factors
     assert "Transição e segurança energética" not in factors
     assert "Portos, ferrovias, rodovias e cabotagem" not in factors
+
+
+def test_all_thirteen_candidates_have_complete_forty_factor_assessments():
+    benchmark = load_benchmark()
+    assert len(scored_slugs()) == 13
+    ranking = weighted_scores(benchmark).set_index("slug")
+    for slug in scored_slugs():
+        assert len(benchmark[SCORE_COLUMNS[slug]]) == 40
+        assert benchmark[SCORE_COLUMNS[slug]].between(0, 10).all(), slug
+        assert benchmark[EVIDENCE_COLUMNS[slug]].astype(str).str.strip().ne("").all(), slug
+        table = candidate_table_with_summary(benchmark, slug)
+        rows, summary = table.iloc[:-1], table.iloc[-1]
+        assert summary["Nota"] == ranking.loc[slug, "score"], slug
+        expected_balance = round(
+            float((rows["Saldo do fator"] * rows["Peso"]).sum() / rows["Peso"].sum()), 2
+        )
+        assert summary["Saldo do fator"] == expected_balance, slug
+
+
+def test_new_non_neutral_scores_are_traceable_to_pages_and_sources():
+    assessments = load_assessments()["candidates"]
+    for slug, candidate in assessments.items():
+        covered = {
+            int(factor_id)
+            for group in candidate["groups"]
+            if group["pages"] and candidate.get("source_key")
+            for factor_id in group["ids"]
+        }
+        non_neutral = {
+            factor_id
+            for factor_id, score in enumerate(candidate["scores"], start=1)
+            if float(score) != 5
+        }
+        assert non_neutral <= covered, slug
+
+
+def test_pablo_stays_neutral_when_official_plan_is_not_in_tse_bundle():
+    benchmark = load_benchmark()
+    assert set(benchmark["pablo_score"]) == {5}
+    assert set(benchmark["pablo_evidence"]) == {"Sem posição localizada"}
+
+
+def test_export_contains_auditable_pros_cons_sources_and_balance():
+    payload = export_payload(load_benchmark(), ["hertz", "zema"])
+    assessment = payload["factors"][0]["assessments"]["hertz"]
+    assert {
+        "score",
+        "pros",
+        "cons",
+        "positive_note",
+        "negative_note",
+        "factor_balance",
+        "evidence",
+        "confidence",
+        "sources",
+        "source_url",
+        "rationale",
+    } <= assessment.keys()
+    assert assessment["source_url"].startswith("https://")

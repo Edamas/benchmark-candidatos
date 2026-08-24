@@ -32,6 +32,8 @@ with tab_rule:
         ("Art. 10 — Cooperação internacional", "Cooperação, comércio e investimento estrangeiro não são entreguismo por natureza; são positivos quando aumentam capacidade brasileira, alternativas e poder de decisão, e negativos quando transferem controle ou criam dependência crítica."),
         ("Art. 11 — Evidência", "A nota deve se apoiar, em ordem de força, em ato executado e comprovado; plano oficial; proposta formal; declaração inequívoca. Associação partidária, intenção presumida e adjetivo não constituem evidência."),
         ("Art. 12 — Imputação", "Atos de familiar, aliado, partido ou grupo não são atribuídos automaticamente ao candidato. Só entram quando houver autoria, adesão ou compromisso próprio documentado."),
+        ("Art. 13 — Silêncio documental", "Quando não for localizada posição específica para o fator, aplica-se nota neutra 5, evidência baixa e ressalva explícita. O silêncio não é convertido em apoio, oposição ou nota zero."),
+        ("Art. 14 — Prós, contras e saldo", "Na tabela revisada, nota prós é a nota de autonomia de 0 a 10; nota contras é o complemento até 10; saldo é nota prós menos nota contras e varia de −10 a +10. A média principal permanece na escala de 0 a 10."),
     ]
     for title, body in articles:
         st.markdown(f"**{title}**")
@@ -130,7 +132,8 @@ with tab_limits:
         """
     )
     st.subheader("Versão atual")
-    st.write("**2026-08-24 · revisão 1**")
+    st.write("**2026-08-24 · revisão 2**")
     st.write(
-        "A nota de Lula em “Relação com os Estados Unidos” foi revista de 6 para 9 após incorporar documentos e atos oficiais sobre reciprocidade, resistência a pressões políticas e diversificação."
+        "Foram incorporadas 320 leituras fator a fator dos oito planos presidenciais que faltavam no benchmark, com páginas, prós, contras e confiança. "
+        "Pablo Marçal permanece com nota neutra 5 nos 40 fatores porque seu plano não constava do pacote público nacional do TSE verificado nesta revisão."
     )

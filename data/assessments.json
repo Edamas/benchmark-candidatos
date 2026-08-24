@@ -1,0 +1,181 @@
+{
+  "version": "2026-08-24.1",
+  "method": "Leitura editorial dos planos oficiais, por fator. Nota 5 é neutra e obrigatória quando não há posição localizável; ideologia e filiação partidária não substituem evidência.",
+  "official_bundle_url": "https://cdn.tse.jus.br/estatistica/sead/odsele/proposta_governo/proposta_governo_2026_BR.zip",
+  "candidates": {
+    "hertz": {
+      "source_key": "plan_hertz",
+      "pages": 33,
+      "scores": [5, 7, 4, 8, 5, 9, 9, 9, 8, 5, 7, 9, 9, 6, 9, 10, 8, 6, 9, 5, 10, 7, 8, 6, 7, 9, 9, 10, 8, 8, 7, 8, 9, 8, 7, 10, 9, 7, 7, 6],
+      "default_reservation": "O plano não apresenta custo, cronograma e transição institucional suficientes para nota máxima.",
+      "groups": [
+        {"ids": [2], "pages": [19, 20], "support": "Propõe atingir patrimônio, financiamento e conexões estatais do crime organizado por investigação e inteligência, em vez de operações indiscriminadas.", "confidence": "Alta"},
+        {"ids": [3], "pages": [32, 33], "support": "Defende reorganização das instituições armadas sob poder dos trabalhadores.", "reservation": "Não detalha prontidão, meios, comando de transição ou continuidade operacional; a ruptura institucional proposta aumenta o risco no curto prazo.", "confidence": "Média"},
+        {"ids": [4, 15, 16, 17, 36, 37], "pages": [2, 3, 5, 6, 26, 27, 30], "support": "Vincula soberania à reindustrialização, ao controle nacional de setores estratégicos, ao reinvestimento no Brasil e à superação do padrão exportador primário.", "confidence": "Alta"},
+        {"ids": [6, 21, 22, 23, 24, 33, 35], "pages": [6, 28, 29], "support": "Propõe infraestrutura digital pública, vedação de nuvem estrangeira para dados sensíveis, IA nacional, software livre e desenvolvimento tecnológico articulado a universidades.", "confidence": "Alta"},
+        {"ids": [7, 8, 9, 11], "pages": [4, 5], "support": "Rejeita subordinação aos EUA, à Europa e à China, critica aquisições sem nova capacidade produtiva e condiciona soberania a alternativas nacionais.", "confidence": "Alta"},
+        {"ids": [12, 13, 34], "pages": [17, 18], "support": "Prevê preços mínimos, estoques reguladores, compras públicas, tecnologias próprias, maquinário agrícola nacional e menor dependência de insumos externos.", "confidence": "Alta"},
+        {"ids": [14], "pages": [11, 12], "support": "Defende SUS público e expansão de serviços, mas trata pouco da fabricação nacional de fármacos, vacinas e equipamentos.", "confidence": "Média"},
+        {"ids": [18, 19], "pages": [27, 28], "support": "Propõe tributação progressiva, controle de capitais, auditoria da dívida e sistema financeiro estatal voltado ao investimento produtivo.", "reservation": "A suspensão de pagamentos e a estatização ampla não vêm acompanhadas de transição monetária e fiscal capaz de excluir instabilidade severa.", "confidence": "Alta"},
+        {"ids": [25, 26, 27, 28, 29, 30, 31], "pages": [15, 16, 26, 27], "support": "Defende controle público de petróleo, energia, mineração e água, recuperação ambiental e processamento nacional de terras raras e minerais críticos.", "confidence": "Alta"},
+        {"ids": [32], "pages": [14], "support": "Propõe transporte público estatal, reversão de concessões e ampliação integrada de metrô e trem.", "confidence": "Alta"},
+        {"ids": [38], "pages": [16], "support": "Defende reforma agrária e retirada do controle fundiário de latifúndios, grupos financeiros e monoculturas exportadoras.", "confidence": "Média"},
+        {"ids": [39, 40], "pages": [9, 10, 28, 29, 30, 31, 32, 33], "support": "Propõe auditoria de plataformas e algoritmos, serviços públicos amplos e participação direta dos trabalhadores.", "reservation": "A ruptura com a ordem constitucional e a indefinição de salvaguardas pluralistas limitam a nota de continuidade institucional e informacional.", "confidence": "Média"}
+      ]
+    },
+    "edmilson": {
+      "source_key": "plan_edmilson",
+      "pages": 16,
+      "scores": [8, 7, 7, 9, 9, 6, 9, 9, 6, 8, 8, 9, 5, 9, 9, 10, 9, 6, 9, 5, 9, 10, 9, 8, 9, 10, 9, 10, 9, 9, 8, 10, 9, 7, 8, 9, 8, 7, 6, 6],
+      "default_reservation": "A diretriz é explícita, mas o plano não quantifica custos, prazos e etapas de transição suficientes para nota máxima.",
+      "groups": [
+        {"ids": [1, 2, 3], "pages": [12, 13, 15], "support": "Prioriza fronteiras com Forças Armadas, Polícia Federal e inteligência e propõe nova formação militar orientada à soberania nacional.", "confidence": "Alta"},
+        {"ids": [4, 5, 6], "pages": [13, 15], "support": "Prevê estatização da indústria bélica, retomada de Alcântara e reorganização de defesa e inteligência.", "confidence": "Alta"},
+        {"ids": [7, 8, 9, 10, 11], "pages": [8, 15, 16], "support": "Defende autodeterminação, fim de acordos militares com os EUA, integração latino-americana, relações mutuamente vantajosas e parcerias voltadas à indústria e tecnologia.", "confidence": "Alta"},
+        {"ids": [12, 34], "pages": [6, 9], "support": "Propõe recompor estoques reguladores, mercados populares e compras diretas da agricultura familiar.", "confidence": "Alta"},
+        {"ids": [14], "pages": [6, 10], "support": "Prevê ampliar Fiocruz, Butantan e o Complexo Econômico-Industrial da Saúde sob comando público.", "confidence": "Alta"},
+        {"ids": [15, 16, 17, 35, 36, 37], "pages": [3, 4, 8, 10, 13, 14], "support": "Propõe reindustrialização, controle público de setores estratégicos, retenção de riqueza e lucros, BNDES ativo e parcerias com desenvolvimento tecnológico doméstico.", "confidence": "Alta"},
+        {"ids": [18, 19], "pages": [4, 5, 13, 14], "support": "Prevê sistema monetário e financeiro público, fim da autonomia do Banco Central, reforma tributária progressiva e investigação da dívida.", "reservation": "Suspensão de juros e revogação ampla das regras fiscais não vêm acompanhadas de mecanismo completo de estabilização e transição.", "confidence": "Alta"},
+        {"ids": [21, 22, 23, 24, 33], "pages": [4, 10, 13], "support": "Propõe Big Techs públicas nacionais, monopólio estatal de telecomunicações, investimento no CEITEC, ciência pública e proteção da biodiversidade.", "confidence": "Alta"},
+        {"ids": [25, 26, 27, 28, 29, 30, 31], "pages": [5, 10, 11, 14, 15], "support": "Articula Petrobras 100% estatal, fundo para energia limpa, reestatização da Eletrobras, monopólio de minerais críticos, proteção hídrica e presença pública nos biomas.", "confidence": "Alta"},
+        {"ids": [32], "pages": [11], "support": "Propõe reestatizar e ampliar a malha ferroviária e integrá-la a hidrovias e transporte urbano sobre trilhos.", "confidence": "Alta"},
+        {"ids": [38], "pages": [6, 9, 12], "support": "Defende reforma agrária, proteção integral de territórios indígenas e uso público de imóveis e terras.", "confidence": "Média"},
+        {"ids": [39, 40], "pages": [4, 12, 13, 14], "support": "Propõe redes e comunicação sob controle público e cooperativo e amplia serviços sociais e participação popular.", "reservation": "A socialização de meios de comunicação e a mudança radical das instituições carecem de salvaguardas suficientemente detalhadas contra controle político e descontinuidade.", "confidence": "Média"}
+      ]
+    },
+    "clariana": {
+      "source_key": "plan_clariana",
+      "pages": 15,
+      "scores": [8, 8, 5, 5, 5, 7, 5, 5, 5, 5, 5, 5, 5, 7, 6, 5, 5, 7, 5, 5, 7, 5, 7, 5, 5, 5, 6, 5, 5, 5, 5, 6, 6, 7, 5, 6, 5, 5, 5, 7],
+      "default_reservation": "A proposta é genérica e não define escala, financiamento nem salvaguardas de controle nacional.",
+      "groups": [
+        {"ids": [1, 2, 6], "pages": [9, 10], "support": "Propõe fronteiras com sensores, radares, drones, comando integrado, inteligência sobre rotas e sufocamento financeiro de facções.", "confidence": "Alta"},
+        {"ids": [14], "pages": [11], "support": "Prevê pesquisa clínica e produção nacional de tecnologias de saúde avaliadas pelo SUS.", "confidence": "Alta"},
+        {"ids": [15, 36], "pages": [5], "support": "Relaciona ambiente de negócios e infraestrutura a indústria, inovação e exportações de maior valor agregado.", "confidence": "Média"},
+        {"ids": [18], "pages": [6, 15], "support": "Prevê revisão de gastos, planejamento plurianual por metas, transparência de subsídios e explicitação do custo fiscal.", "confidence": "Alta"},
+        {"ids": [21], "pages": [12, 13], "support": "Propõe identidade e serviços digitais integrados, governança de IA, auditoria e privacidade.", "confidence": "Alta"},
+        {"ids": [23], "pages": [7, 8], "support": "Prevê ciência na escola e expansão da formação técnica ligada às vocações regionais.", "confidence": "Alta"},
+        {"ids": [27, 32, 33], "pages": [5], "support": "Cita segurança energética, conectividade e ferrovias numa estratégia logística de longo prazo.", "confidence": "Média"},
+        {"ids": [34], "pages": [5, 13], "support": "Prevê compras públicas acessíveis a pequenos negócios e processos rastreáveis.", "confidence": "Alta"},
+        {"ids": [40], "pages": [3, 4, 11, 14, 15], "support": "Estrutura proteção social, saúde, pactos federativos e continuidade com metas e indicadores públicos.", "confidence": "Alta"}
+      ]
+    },
+    "rui": {
+      "source_key": "plan_rui",
+      "pages": 7,
+      "scores": [5, 5, 5, 5, 5, 5, 8, 9, 5, 6, 5, 7, 5, 6, 7, 9, 8, 5, 9, 5, 6, 5, 7, 5, 5, 9, 8, 9, 6, 8, 5, 5, 7, 5, 5, 7, 5, 7, 4, 6],
+      "default_reservation": "O programa é curto e não apresenta financiamento, cronograma ou desenho operacional suficientes para nota máxima.",
+      "groups": [
+        {"ids": [7, 8, 10], "pages": [7], "support": "Rejeita ingerência estrangeira na Amazônia e na América Latina e defende soberania e autodeterminação.", "confidence": "Alta"},
+        {"ids": [12, 38], "pages": [4], "support": "Defende reforma agrária, produção de alimentos e expropriação de latifúndios e imóveis especulativos.", "confidence": "Média"},
+        {"ids": [14, 23, 40], "pages": [2, 4, 5], "support": "Prevê expansão de saúde, educação e proteção social públicas, com formação de profissionais.", "confidence": "Média"},
+        {"ids": [15, 16, 17, 36], "pages": [3], "support": "Propõe cancelar privatizações, reestatizar ativos entregues ao capital estrangeiro e usar recursos naturais em benefício interno.", "confidence": "Alta"},
+        {"ids": [19], "pages": [6], "support": "Propõe Banco Central sob comando público, banco estatal único e cancelamento de dívidas externa e interna.", "reservation": "Não detalha transição monetária, regulação de crédito ou tratamento de choques financeiros.", "confidence": "Alta"},
+        {"ids": [21, 33], "pages": [6], "support": "Defende internet universal e quebra do controle privado concentrado das telecomunicações.", "confidence": "Média"},
+        {"ids": [26, 27, 28], "pages": [3], "support": "Prevê Petrobras 100% estatal, reestatização da Eletrobras e empresa estatal para terras raras e reservas minerais.", "confidence": "Alta"},
+        {"ids": [29, 30], "pages": [2, 7], "support": "Defende serviços essenciais de água e controle nacional da Amazônia e de suas riquezas.", "confidence": "Média"},
+        {"ids": [39], "pages": [5, 6], "support": "Defende liberdade ampla de expressão e quebra de monopólios privados de mídia e internet.", "reservation": "Também propõe cancelar concessões e estatizar meios por juízo político, sem salvaguardas contra censura arbitrária.", "confidence": "Alta"}
+      ]
+    },
+    "zema": {
+      "source_key": "plan_zema",
+      "pages": 81,
+      "scores": [9, 9, 8, 6, 5, 8, 6, 6, 5, 4, 6, 5, 6, 7, 5, 2, 3, 8, 6, 6, 4, 5, 7, 7, 8, 3, 4, 6, 6, 8, 6, 7, 5, 3, 3, 7, 4, 5, 4, 6],
+      "default_reservation": "A execução depende majoritariamente de capital privado e o plano não fixa salvaguardas suficientes de controle e continuidade nacionais.",
+      "groups": [
+        {"ids": [1, 2], "pages": [5, 6, 38], "support": "Prevê presença estatal nas fronteiras, inteligência integrada e operações contra redes financeiras e logísticas transnacionais.", "confidence": "Alta"},
+        {"ids": [3, 4, 6], "pages": [77, 78], "support": "Propõe dissuasão, integração das Forças, prioridade a equipamento e tecnologia e modernização da inteligência e da defesa cibernética.", "confidence": "Alta"},
+        {"ids": [7, 8, 9, 10], "pages": [36, 37, 38], "support": "Defende diplomacia pragmática e independente, mas também alinhamento preferencial às democracias, saída do BRICS e entrada na OCDE.", "reservation": "A saída do BRICS reduz um instrumento de diversificação e o plano não define contrapesos equivalentes para evitar nova concentração geopolítica.", "confidence": "Alta"},
+        {"ids": [11], "pages": [20, 21, 38], "support": "Propõe diversificar mercados e firmar novos acordos comerciais.", "reservation": "A redução ampla de tarifas e barreiras não vem condicionada à preservação de compras públicas, tecnologia ou setores sensíveis.", "confidence": "Alta"},
+        {"ids": [13], "pages": [43], "support": "Combina produção nacional de fertilizantes com facilitação de importações.", "reservation": "A abertura à importação pode diversificar oferta, mas não garante substituição doméstica nem estoques estratégicos.", "confidence": "Alta"},
+        {"ids": [14], "pages": [60], "support": "Propõe integrar empresas e universidades para produzir soluções de saúde e reduzir dependência externa de insumos e equipamentos.", "confidence": "Alta"},
+        {"ids": [16, 17], "pages": [15, 20, 21, 22], "support": "Propõe privatizar todas as estatais e atrair capital estrangeiro para infraestrutura, tecnologia e setores estratégicos.", "reservation": "Não apresenta triagem de segurança nacional, limites de controle, reciprocidade, conteúdo local obrigatório ou continuidade pública em ativos estratégicos.", "confidence": "Alta"},
+        {"ids": [18, 19], "pages": [14, 18], "support": "Prevê ajuste fiscal, estabilização da dívida, queda de juros e concorrência financeira.", "confidence": "Alta"},
+        {"ids": [20], "pages": [17], "support": "Reconhece o Pix como ativo brasileiro de adoção massiva.", "reservation": "Não propõe governança, continuidade ou proteção específica da infraestrutura nacional de pagamentos.", "confidence": "Média"},
+        {"ids": [21, 33], "pages": [21, 31], "support": "Propõe atrair data centers, ampliar 5G e conectar áreas remotas.", "reservation": "Não exige nuvem soberana, operação nacional, redundância, segurança de cabos ou controle de dados sensíveis.", "confidence": "Alta"},
+        {"ids": [23, 24], "pages": [22, 49, 52, 54, 55], "support": "Prevê formação técnica, pesquisa aplicada, bioeconomia e regras de propriedade intelectual para patrimônio genético.", "confidence": "Alta"},
+        {"ids": [25, 27, 31], "pages": [32, 33, 34, 37, 47, 48, 49], "support": "Propõe eletrificação, biocombustíveis, hidrogênio verde, mercado de carbono e expansão energética por regulação e investimento privado.", "confidence": "Alta"},
+        {"ids": [26], "pages": [33, 34], "support": "Defende produção de petróleo e gás e maior concorrência.", "reservation": "A desverticalização da Petrobras e a retirada de conteúdo local reduzem controle integrado, capacidade de refino e política tecnológica nacional.", "confidence": "Alta"},
+        {"ids": [28, 36], "pages": [21, 35, 48], "support": "Prevê pesquisa geológica, extração, processamento de minerais e agregação de valor em bioeconomia.", "reservation": "Não fixa limites ao controle estrangeiro nem processamento doméstico obrigatório para minerais críticos.", "confidence": "Alta"},
+        {"ids": [29, 30], "pages": [46, 47, 48, 49], "support": "Prevê segurança hídrica, combate a grilagem, desmatamento e mineração ilegal com monitoramento e presença estatal.", "confidence": "Alta"},
+        {"ids": [32], "pages": [26, 29, 30, 44], "support": "Detalha ampliação ferroviária, direito de passagem, corredores estruturantes e integração com portos.", "reservation": "A estratégia depende de concessões e autorizações sem salvaguarda explícita contra controle de gargalos por agentes externos.", "confidence": "Alta"},
+        {"ids": [34, 35], "pages": [33, 34], "support": "Prevê incentivos por desempenho para desenvolver fornecedores no petróleo.", "reservation": "Substitui exigências rígidas de conteúdo local e não exige transferência efetiva de engenharia, código ou propriedade intelectual.", "confidence": "Alta"},
+        {"ids": [37], "pages": [20, 21, 43], "support": "Busca ampliar concorrência e fornecedores por abertura comercial.", "reservation": "Não há política de diversificação, estoques ou capacidade substitutiva para rupturas externas.", "confidence": "Média"},
+        {"ids": [39], "pages": [73, 74], "support": "Reforça liberdade de expressão e limites à censura estatal.", "reservation": "Proibir moderação e não tratar operações estrangeiras coordenadas deixa plataformas e o debate público expostos a captura e desinformação.", "confidence": "Alta"},
+        {"ids": [40], "pages": [62, 63, 64, 65], "support": "Mantém rede social focalizada, moradia e integração de dados, com porta de saída pelo trabalho.", "confidence": "Alta"}
+      ]
+    },
+    "wilson": {
+      "source_key": "plan_wilson",
+      "pages": 58,
+      "scores": [10, 9, 9, 9, 5, 8, 9, 7, 7, 7, 9, 6, 5, 9, 7, 8, 9, 7, 6, 7, 8, 5, 9, 5, 7, 5, 6, 6, 6, 8, 7, 9, 6, 8, 9, 7, 5, 6, 5, 8],
+      "default_reservation": "A proposta é verificável, mas sua execução depende de orçamento, regulamentação e aprovação legislativa ainda não assegurados.",
+      "groups": [
+        {"ids": [1, 2], "pages": [49, 50, 51], "support": "Prevê bases permanentes, Sisfron ampliado, patrulhamento fluvial e aéreo e integração financeira e operacional contra crime transnacional.", "confidence": "Alta"},
+        {"ids": [3, 4, 6], "pages": [49, 50, 51], "support": "Propõe 2% do PIB para defesa, 35% para modernização, contratos plurianuais, prontidão, Base Industrial de Defesa com conteúdo nacional e defesa cibernética.", "confidence": "Alta"},
+        {"ids": [7, 8, 9, 10, 11], "pages": [51, 52], "support": "Condiciona negociações a interesse brasileiro, reciprocidade, acesso a mercado e decisão multilateral caso a caso, sem alinhamento automático.", "confidence": "Alta"},
+        {"ids": [12, 34], "pages": [32, 33], "support": "Prevê compras públicas locais para agricultura familiar, defesa sanitária e diplomacia comercial.", "confidence": "Média"},
+        {"ids": [14], "pages": [34], "support": "Propõe fortalecer produção nacional de medicamentos e imunizantes com política de compras capaz de sustentar a base industrial.", "confidence": "Alta"},
+        {"ids": [15, 16, 17, 35], "pages": [51, 52], "support": "Exige conteúdo nacional na defesa e contrapartidas de conteúdo, transferência de tecnologia e emprego em investimento estrangeiro estratégico.", "confidence": "Alta"},
+        {"ids": [18, 19, 20], "pages": [8, 9, 10, 11, 12, 13, 14, 15], "support": "Apresenta reforma tributária baseada no sistema de pagamentos, salvaguardas de arrecadação, transição e preservação de funções extrafiscais.", "reservation": "O tributo sobre transações tem riscos de cumulatividade, evasão e calibragem reconhecidos pelo próprio plano; não há política monetária externa completa.", "confidence": "Alta"},
+        {"ids": [21], "pages": [44, 45], "support": "Prevê interoperabilidade, rastreabilidade de consultas, LGPD efetiva, ANPD reforçada e dados públicos abertos.", "confidence": "Alta"},
+        {"ids": [23], "pages": [36, 37], "support": "Propõe carreira federal de pesquisador, financiamento plurianual e expansão da educação profissional.", "confidence": "Alta"},
+        {"ids": [25, 27, 31], "pages": [46, 47, 48], "support": "Usa a matriz renovável para atrair indústria, prevê regulação energética estável, combate ao desmatamento e adaptação climática.", "confidence": "Alta"},
+        {"ids": [28, 29, 30, 38], "pages": [46, 47, 48], "support": "Propõe mineração formal com consentimento indígena, participação econômica, proibição de mercúrio, garantia de recuperação, saneamento e combate ao desmatamento.", "reservation": "Não há política específica de minerais críticos, processamento nacional ou limitação de controle estrangeiro de terras e ativos.", "confidence": "Alta"},
+        {"ids": [32], "pages": [46, 48], "support": "Cria o Brasil nos Trilhos, com corredores prioritários, integração ferrovia-porto, indicadores e entrega por trecho.", "confidence": "Alta"},
+        {"ids": [33], "pages": [44, 49, 51], "support": "Trata redes e bases estatais como infraestrutura crítica e integra defesa cibernética.", "reservation": "Não detalha satélites, cabos, espectro ou capacidade nacional de operar equipamentos de telecomunicações.", "confidence": "Média"},
+        {"ids": [36], "pages": [32, 52], "support": "Orienta diplomacia e rastreabilidade à abertura de mercados e exige retorno econômico de negociações externas.", "confidence": "Média"},
+        {"ids": [40], "pages": [3, 4, 34, 36, 41, 42, 54, 55], "support": "Combina continuidade de SUS e educação, metas verificáveis, proteção social e salvaguardas legais para emprego excepcional das Forças Armadas.", "confidence": "Alta"}
+      ]
+    },
+    "augusto": {
+      "source_key": "plan_augusto",
+      "pages": 200,
+      "scores": [8, 8, 5, 6, 5, 8, 8, 6, 6, 8, 8, 7, 5, 9, 9, 6, 6, 8, 6, 5, 8, 9, 9, 7, 9, 5, 8, 10, 8, 8, 7, 7, 7, 5, 9, 10, 7, 5, 6, 9],
+      "default_reservation": "O plano formula metas ambiciosas, mas em muitos casos não apresenta custo, cronograma, seleção de projetos ou salvaguardas operacionais suficientes para nota máxima.",
+      "groups": [
+        {"ids": [1, 2], "pages": [45, 46, 47, 186, 187, 188, 189, 190], "support": "Prevê fronteiras inteligentes, drones, satélites, integração das forças e ataque financeiro e logístico a redes criminosas.", "confidence": "Alta"},
+        {"ids": [4, 6], "pages": [46, 47, 57, 58], "support": "Classifica defesa, segurança cibernética, dados e IA como áreas estratégicas de ciência e infraestrutura estatal.", "confidence": "Média"},
+        {"ids": [7, 8, 9, 10, 11], "pages": [58, 59, 60, 64, 65, 146, 147, 148, 149, 150, 151, 152], "support": "Propõe diplomacia equilibrada, diversificação de mercados, cooperação Sul-Sul, multilateralismo e embaixadas orientadas a tecnologia, exportação e interesse nacional.", "confidence": "Alta"},
+        {"ids": [12], "pages": [47, 126, 127, 128, 129, 157, 158], "support": "Prevê ampliar produção, armazenagem, agroindústria e estoques estratégicos, inclusive em programas de combate à fome.", "confidence": "Média"},
+        {"ids": [14], "pages": [41, 44, 161, 162, 163, 164], "support": "Propõe capacidade nacional de medicamentos, vacinas, equipamentos e biotecnologia, além de digitalização do SUS.", "confidence": "Alta"},
+        {"ids": [15, 16, 17, 34, 36, 37], "pages": [40, 41, 42, 43, 95, 126, 127, 128, 129, 140, 141, 142, 143, 144], "support": "Prevê 10 mil indústrias, manufatura avançada, zonas de exportação, crédito e corredores voltados a produtos de maior valor agregado.", "reservation": "A atração de capital externo é ampla e não vem acompanhada de triagem nacional uniforme, limites de controle ou conteúdo local obrigatório em todos os setores.", "confidence": "Alta"},
+        {"ids": [18, 19], "pages": [36, 37, 38, 39, 55, 56], "support": "Prevê déficit próximo de zero, redução gradual da dívida, avaliação de gastos e crédito produtivo.", "reservation": "Não desenvolve política de moeda, câmbio e vulnerabilidade financeira externa.", "confidence": "Alta"},
+        {"ids": [21, 22, 23, 24, 33], "pages": [38, 39, 40, 41, 50, 57, 58, 78, 79], "support": "Propõe governo digital, soberania de dados, cibersegurança, chips, ciência aplicada, conectividade universal e bioeconomia.", "confidence": "Alta"},
+        {"ids": [25, 27], "pages": [51, 175, 176], "support": "O PENER-BR prevê energia solar, eólica, oceânica, biomassa, hidrogênio, armazenamento e cadeia nacional de equipamentos.", "confidence": "Alta"},
+        {"ids": [28, 35], "pages": [41, 65, 178, 179, 180], "support": "O PETRA-BR detalha mapeamento, separação, refino, materiais avançados, processamento local e transferência de tecnologia.", "confidence": "Alta"},
+        {"ids": [29, 30, 31], "pages": [47, 48, 49, 50, 51, 52, 61, 62, 175, 176, 182, 183, 184], "support": "Prevê segurança hídrica, proteção da Amazônia, combate a incêndios, recuperação de áreas e diplomacia climática.", "confidence": "Alta"},
+        {"ids": [32], "pages": [41, 42, 50], "support": "Inclui ferrovias nos corredores estratégicos e numa integração logística nacional multimodal.", "reservation": "Não fixa expansão de malha, interoperabilidade, direito de passagem ou salvaguardas de controle de corredores.", "confidence": "Média"},
+        {"ids": [39], "pages": [15, 20, 21, 22, 53, 54], "support": "Identifica opacidade algorítmica e desinformação e propõe educação digital, transparência e regulação de conteúdo nocivo.", "reservation": "Não detalha resposta a operações estrangeiras coordenadas nem limites precisos para evitar censura arbitrária.", "confidence": "Média"},
+        {"ids": [40], "pages": [18, 19, 27, 28, 29, 30, 31, 32, 33, 62, 63], "support": "Coloca coesão, saúde emocional, serviços essenciais e continuidade democrática no centro do projeto nacional.", "confidence": "Alta"}
+      ]
+    },
+    "samara": {
+      "source_key": "plan_samara",
+      "pages": 67,
+      "scores": [5, 6, 6, 9, 5, 7, 9, 9, 9, 7, 8, 9, 8, 8, 9, 10, 9, 7, 9, 5, 8, 6, 9, 8, 9, 10, 9, 9, 9, 9, 8, 9, 9, 8, 8, 9, 9, 9, 6, 7],
+      "default_reservation": "A diretriz é explícita, mas custos, prazos e a transição institucional para o novo arranjo não são suficientemente detalhados para nota máxima.",
+      "groups": [
+        {"ids": [2, 3, 6], "pages": [47, 48, 49, 50, 60], "support": "Propõe integração de inteligência contra crime organizado e reserva a defesa e a indústria bélica a estruturas públicas.", "confidence": "Média"},
+        {"ids": [4], "pages": [60], "support": "Prevê monopólio público da indústria de defesa como setor estratégico.", "confidence": "Alta"},
+        {"ids": [7, 8, 9, 10, 11], "pages": [4, 5, 57, 64, 65], "support": "Defende autodeterminação e rompimento de relações de submissão militar e econômica aos EUA, à OTAN ou à China e critica acordos comerciais assimétricos.", "confidence": "Alta"},
+        {"ids": [12, 13, 34], "pages": [43, 44, 45], "support": "Prevê reforma agrária, abastecimento interno, armazenagem, compras públicas e apoio técnico e produtivo à agricultura familiar.", "confidence": "Alta"},
+        {"ids": [14, 23], "pages": [19, 20, 21, 22, 23], "support": "Defende SUS integralmente público, formação técnica, universidades, bolsas e ciência voltada à soberania e às necessidades sociais.", "confidence": "Alta"},
+        {"ids": [15, 16, 17, 35, 36, 37], "pages": [55, 56, 57, 58, 60], "support": "Propõe política industrial ativa, transferência tecnológica, controle público dos setores estratégicos e fim da desnacionalização e da remessa irrestrita de recursos.", "confidence": "Alta"},
+        {"ids": [18, 19], "pages": [14, 15, 16, 17, 18], "support": "Prevê tributação progressiva, revisão da dívida, controle público do sistema financeiro e crédito direcionado às necessidades nacionais.", "reservation": "A ruptura financeira ampla não vem acompanhada de plano completo de estabilização, câmbio e transição de contratos.", "confidence": "Alta"},
+        {"ids": [21, 22, 24, 33, 39], "pages": [23, 37, 38, 39, 60], "support": "Defende ciência pública, redes digitais e telecomunicações sob controle nacional e fim do monopólio estrangeiro de plataformas.", "reservation": "O desenho de controle público da comunicação não explicita salvaguardas suficientes contra uso político e censura arbitrária.", "confidence": "Média"},
+        {"ids": [25, 26, 27, 28, 29, 30, 31], "pages": [58, 59, 60, 61, 62, 63], "support": "Prevê reestatizar Petrobras e Eletrobras, monopólio público de mineração e energia, transição de matrizes, proteção hídrica e controle popular da Amazônia.", "confidence": "Alta"},
+        {"ids": [32], "pages": [51, 52, 60], "support": "Propõe reestatizar malhas ferroviárias e expandir metrôs e trens como parte do transporte público.", "confidence": "Alta"},
+        {"ids": [38], "pages": [35, 36, 43, 44, 57, 58], "support": "Combina reforma agrária, demarcação indígena, combate à grilagem e proibição de controle estrangeiro da economia e de ativos estratégicos.", "confidence": "Alta"},
+        {"ids": [40], "pages": [6, 7, 8, 9, 10, 11, 12, 13, 19, 20], "support": "Prevê trabalho, renda, saúde, educação e serviços universais como base de capacidade social e mobilização nacional.", "reservation": "A transformação revolucionária do Estado não traz plano completo de continuidade institucional e administrativa.", "confidence": "Média"}
+      ]
+    },
+    "pablo": {
+      "source_key": "plan_pablo_gap",
+      "pages": null,
+      "scores": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+      "default_reservation": "O plano presidencial não constava do pacote público nacional de propostas do TSE atualizado em 24/08/2026; sem o documento primário acessível, a nota permanece neutra e não é inferida de campanhas anteriores.",
+      "groups": []
+    }
+  }
+}

@@ -11,17 +11,35 @@ from src.config import DATA_DIR
 
 
 SCORE_COLUMNS = {
-    "caiado": "caiado_score",
     "lula": "lula_score",
-    "flavio": "flavio_score",
     "renan": "renan_score",
+    "hertz": "hertz_score",
+    "edmilson": "edmilson_score",
+    "flavio": "flavio_score",
+    "clariana": "clariana_score",
+    "pablo": "pablo_score",
+    "rui": "rui_score",
+    "zema": "zema_score",
+    "wilson": "wilson_score",
+    "caiado": "caiado_score",
+    "augusto": "augusto_score",
+    "samara": "samara_score",
 }
 
 EVIDENCE_COLUMNS = {
-    "caiado": "caiado_evidence",
     "lula": "lula_evidence",
-    "flavio": "flavio_evidence",
     "renan": "renan_evidence",
+    "hertz": "hertz_evidence",
+    "edmilson": "edmilson_evidence",
+    "flavio": "flavio_evidence",
+    "clariana": "clariana_evidence",
+    "pablo": "pablo_evidence",
+    "rui": "rui_evidence",
+    "zema": "zema_evidence",
+    "wilson": "wilson_evidence",
+    "caiado": "caiado_evidence",
+    "augusto": "augusto_evidence",
+    "samara": "samara_evidence",
 }
 
 WEIGHT_COMPONENTS = [
@@ -95,8 +113,59 @@ def load_candidate_snapshot() -> dict:
 
 
 @st.cache_data(show_spinner=False)
+def load_assessments() -> dict:
+    return json.loads((DATA_DIR / "assessments.json").read_text(encoding="utf-8"))
+
+
+def assessment_factor(slug: str, factor_id: int) -> dict | None:
+    """Return the page-traceable assessment for a newly researched candidate."""
+    candidate = load_assessments().get("candidates", {}).get(slug)
+    if not candidate:
+        return None
+    scores = candidate.get("scores", [])
+    if not 1 <= int(factor_id) <= len(scores):
+        return None
+    group = next(
+        (entry for entry in candidate.get("groups", []) if int(factor_id) in entry.get("ids", [])),
+        None,
+    )
+    score = float(scores[int(factor_id) - 1])
+    if group:
+        pages = [int(page) for page in group.get("pages", [])]
+        evidence = group.get("evidence", "Explícita no plano" if pages else "Indireta ou não detalhada")
+        support = group["support"]
+        reservation = group.get("reservation", candidate["default_reservation"])
+        confidence = group.get("confidence", "Média")
+    else:
+        pages = []
+        evidence = "Sem posição localizada"
+        support = "Não foi localizada posição específica no plano oficial para este fator."
+        reservation = candidate["default_reservation"]
+        confidence = "Baixa"
+    return {
+        "score": score,
+        "evidence": evidence,
+        "support": support,
+        "reservation": reservation,
+        "confidence": confidence,
+        "pages": pages,
+        "source_keys": [candidate["source_key"]],
+    }
+
+
+@st.cache_data(show_spinner=False)
 def load_benchmark() -> pd.DataFrame:
     frame = pd.read_csv(DATA_DIR / "benchmark.csv")
+    assessments = load_assessments().get("candidates", {})
+    for slug, assessment in assessments.items():
+        score_column = SCORE_COLUMNS[slug]
+        evidence_column = EVIDENCE_COLUMNS[slug]
+        if score_column not in frame:
+            frame[score_column] = assessment["scores"]
+        if evidence_column not in frame:
+            frame[evidence_column] = [
+                assessment_factor(slug, factor_id)["evidence"] for factor_id in frame["id"]
+            ]
     numeric = ["id", "weight", *WEIGHT_COMPONENTS, *SCORE_COLUMNS.values()]
     frame[numeric] = frame[numeric].apply(pd.to_numeric)
     return frame
@@ -334,6 +403,13 @@ def factor_note(slug: str, row: pd.Series) -> tuple[str, list[str]]:
     overrides = load_score_notes().get(slug, {}).get(str(int(row["id"])))
     if overrides:
         return overrides["note"], overrides.get("source_keys", [])
+    assessment = assessment_factor(slug, int(row["id"]))
+    if assessment:
+        note = (
+            f"Nota {assessment['score']:g}: {score_band(assessment['score'])}. "
+            f"Base: {assessment['support']} Ressalva: {assessment['reservation']}"
+        )
+        return note, assessment["source_keys"]
     candidate = candidate_map()[slug]
     score = float(row[SCORE_COLUMNS[slug]])
     evidence = row[EVIDENCE_COLUMNS[slug]]
@@ -420,6 +496,16 @@ def candidate_factor_table(
         base = None
         if original_id and (slug, original_id) in original_lookup.index:
             base = original_lookup.loc[(slug, original_id)]
+        assessment = assessment_factor(slug, int(row["id"]))
+        pros = assessment["support"] if assessment else (
+            base["Prós"] if base is not None else "Sem correspondência direta na tabela original"
+        )
+        cons = assessment["reservation"] if assessment else (
+            base["Contras"] if base is not None else "Exige justificativa específica na revisão"
+        )
+        page_suffix = ""
+        if assessment and assessment["pages"]:
+            page_suffix = " — p. " + ", ".join(str(page) for page in assessment["pages"])
         rows.append(
             {
                 "ID": int(row["id"]),
@@ -429,13 +515,14 @@ def candidate_factor_table(
                 "Nota": score,
                 "Contribuição": round(score * weight, 2),
                 "Evidência": row[EVIDENCE_COLUMNS[slug]],
-                "Prós (base)": base["Prós"] if base is not None else "Sem correspondência direta na tabela original",
-                "Contras (base)": base["Contras"] if base is not None else "Exige justificativa específica na revisão",
-                "Nota prós (base)": float(base["Pontos +"]) if base is not None else pd.NA,
-                "Nota contras (base)": float(base["Pontos −"]) if base is not None else pd.NA,
-                "Saldo do fator (base)": float(base["Saldo original"]) if base is not None else pd.NA,
+                "Prós": pros,
+                "Contras": cons,
+                "Nota prós": score,
+                "Nota contras": 10.0 - score,
+                "Saldo do fator": 2.0 * score - 10.0,
+                "Confiança": assessment["confidence"] if assessment else "Base legada",
                 "Fonte(s)": (
-                    "; ".join(source["title"] for source in sources)
+                    "; ".join(source["title"] for source in sources) + page_suffix
                 ),
                 "URL da fonte": sources[0]["url"] if sources else "",
                 "Fundamento": note,
@@ -452,6 +539,9 @@ def candidate_table_with_summary(
     table = candidate_factor_table(benchmark, slug, custom_weights)
     denominator = table["Peso"].sum()
     average = table["Contribuição"].sum() / denominator if denominator else float("nan")
+    weighted_plus = (table["Nota prós"] * table["Peso"]).sum() / denominator if denominator else float("nan")
+    weighted_minus = (table["Nota contras"] * table["Peso"]).sum() / denominator if denominator else float("nan")
+    weighted_balance = (table["Saldo do fator"] * table["Peso"]).sum() / denominator if denominator else float("nan")
     summary = pd.DataFrame(
         [
             {
@@ -462,11 +552,12 @@ def candidate_table_with_summary(
                 "Nota": round(float(average), 2),
                 "Contribuição": round(float(table["Contribuição"].sum()), 2),
                 "Evidência": "Cálculo",
-                "Prós (base)": "—",
-                "Contras (base)": "—",
-                "Nota prós (base)": pd.NA,
-                "Nota contras (base)": pd.NA,
-                "Saldo do fator (base)": pd.NA,
+                "Prós": "Σ(nota prós × peso) ÷ Σ(pesos)",
+                "Contras": "Σ(nota contras × peso) ÷ Σ(pesos)",
+                "Nota prós": round(float(weighted_plus), 2),
+                "Nota contras": round(float(weighted_minus), 2),
+                "Saldo do fator": round(float(weighted_balance), 2),
+                "Confiança": "—",
                 "Fonte(s)": "Cálculo a partir das linhas anteriores",
                 "URL da fonte": "",
                 "Fundamento": "Σ(nota × peso) ÷ Σ(pesos)",
@@ -508,6 +599,10 @@ def export_payload(
     selected = list(slugs)
     weights = normalize_weights(benchmark, custom_weights)
     ranking = weighted_scores(benchmark, selected, custom_weights).to_dict("records")
+    assessment_tables = {
+        slug: candidate_factor_table(benchmark, slug, custom_weights).set_index("ID")
+        for slug in selected
+    }
     factors = benchmark[
         ["id", "block", "factor", "definition", *WEIGHT_COMPONENTS]
     ].copy()
@@ -519,6 +614,22 @@ def export_payload(
             slug: float(benchmark.loc[benchmark["id"] == row["id"], SCORE_COLUMNS[slug]].iloc[0])
             for slug in selected
         }
+        record["assessments"] = {}
+        for slug in selected:
+            assessment = assessment_tables[slug].loc[int(row["id"])]
+            record["assessments"][slug] = {
+                "score": float(assessment["Nota"]),
+                "pros": assessment["Prós"],
+                "cons": assessment["Contras"],
+                "positive_note": float(assessment["Nota prós"]),
+                "negative_note": float(assessment["Nota contras"]),
+                "factor_balance": float(assessment["Saldo do fator"]),
+                "evidence": assessment["Evidência"],
+                "confidence": assessment["Confiança"],
+                "sources": assessment["Fonte(s)"],
+                "source_url": assessment["URL da fonte"],
+                "rationale": assessment["Fundamento"],
+            }
         factor_records.append(record)
     return {
         "title": "Brasil Com Censo — Benchmark de Candidatos",

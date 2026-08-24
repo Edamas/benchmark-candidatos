@@ -21,7 +21,7 @@ from src.ui import analytic_footer, candidate_card, hero
 
 hero(
     "Benchmark de Candidatos",
-    "Os 13 pedidos presidenciais do TSE aparecem abaixo. Quatro avaliações de soberania estão concluídas; as demais entram sem notas presumidas.",
+    "Os 13 pedidos presidenciais do TSE aparecem abaixo, com avaliação dos 40 fatores. Nota neutra identifica silêncio ou lacuna documental — não aprovação automática.",
     "Eleição presidencial · Brasil · 2026",
 )
 
@@ -53,7 +53,7 @@ with body:
                     width="stretch",
                 )
 
-    st.subheader("Avaliações concluídas")
+    st.subheader("Média ponderada dos 40 fatores")
     st.dataframe(
         ranking.rename(columns={"candidate": "Candidato", "party": "Partido", "score": "Média ponderada"})[
             ["Candidato", "Partido", "Média ponderada"]
@@ -75,7 +75,7 @@ with graph:
             render_radar(overview, "Visão geral · 40 fatores", key="election_overview_radar")
         else:
             st.plotly_chart(ranking_chart(ranking), width="stretch", config=PLOTLY_CONFIG)
-        st.caption("O radar agrega todos os 40 fatores. Os nove pedidos ainda não avaliados não recebem linhas artificiais.")
+        st.caption("O radar agrega todos os 40 fatores. Nota 5 representa neutralidade, ambiguidade ou evidência insuficiente.")
 
 payload = {
     "official_snapshot": load_candidate_snapshot(),
@@ -95,6 +95,6 @@ analytic_footer(
     [
         "Os 13 nomes constam no snapshot oficial do TSE de 24/08/2026; pedido registrado não significa registro deferido.",
         "Cadastro e finanças são dados oficiais; notas e pesos são avaliação editorial auditável.",
-        "Ausência de avaliação nunca é convertida automaticamente em nota zero.",
+        "Quando o plano não trata um fator, a nota permanece neutra em 5; ausência de evidência nunca é convertida em zero.",
     ],
 )

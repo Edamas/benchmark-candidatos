@@ -1,0 +1,17 @@
+[theme]
+base = "light"
+primaryColor = "#116149"
+backgroundColor = "#F6F7F2"
+secondaryBackgroundColor = "#E9EFE8"
+textColor = "#17201C"
+linkColor = "#0B6654"
+baseRadius = "large"
+buttonRadius = "full"
+font = "sans-serif"
+
+[server]
+headless = true
+maxUploadSize = 50
+
+[browser]
+gatherUsageStats = false

@@ -1,0 +1,38 @@
+{
+  "lula": {
+    "8": {
+      "note": "Nota 9: há evidência de defesa de diálogo sem submissão, separação entre comércio e pressões políticas, reação institucional às tarifas dos EUA e diversificação de parceiros. Não é 10 porque cooperação e dependências materiais continuam existindo.",
+      "source_keys": ["lula_us_congress", "brasil_soberano"]
+    }
+  },
+  "flavio": {
+    "7": {
+      "note": "Nota 4: a aproximação preferencial com os EUA reduz diversificação e aumenta o risco de alinhamento automático; a nota não atribui ao candidato atos de familiares sem adesão comprovada.",
+      "source_keys": []
+    },
+    "8": {
+      "note": "Nota 3: a cooperação proposta é lida como assimétrica quando não vem acompanhada de reciprocidade, alternativas e salvaguardas brasileiras suficientes. A oposição posterior a tarifas impede nota ainda menor.",
+      "source_keys": []
+    },
+    "16": {
+      "note": "Nota 4: desestatização e abertura de setores estratégicos, quando não acompanhadas de limites de controle e continuidade, transferem poder decisório para agentes externos ou privados.",
+      "source_keys": []
+    },
+    "17": {
+      "note": "Nota 3: o plano valoriza capital estrangeiro, mas não detalha suficientemente reciprocidade, análise de segurança nacional, conteúdo local e transferência tecnológica.",
+      "source_keys": []
+    },
+    "28": {
+      "note": "Nota 3: oferecer minerais como solução de suprimento a outro país, sem compromisso equivalente de processamento no Brasil, domínio tecnológico e controle nacional, aumenta o risco de exportação primária dependente.",
+      "source_keys": []
+    },
+    "35": {
+      "note": "Nota 4: parcerias externas sem exigências claras de engenharia, código, manutenção, propriedade intelectual e formação local produzem acesso, mas não domínio tecnológico.",
+      "source_keys": []
+    },
+    "37": {
+      "note": "Nota 4: concentração política e econômica em um parceiro reduz alternativas brasileiras diante de sanção, ruptura logística ou condicionamento externo.",
+      "source_keys": []
+    }
+  }
+}

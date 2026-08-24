@@ -1,0 +1,14 @@
+{
+  "snapshot_date": "2026-08-24",
+  "sources": [
+    {"key": "tse_candidates", "title": "Candidatos — 2026", "publisher": "Tribunal Superior Eleitoral", "type": "Dados oficiais", "url": "https://dadosabertos.tse.jus.br/pt_BR/dataset/candidatos-2026", "use": "Cadastro, bens, coligações, redes, fotos e propostas", "cadence": "4 vezes ao dia"},
+    {"key": "tse_finance", "title": "Prestação de Contas Eleitorais — 2026", "publisher": "Tribunal Superior Eleitoral", "type": "Dados oficiais", "url": "https://dadosabertos.tse.jus.br/pt_BR/dataset/prestacao-de-contas-eleitorais-2026", "use": "Receitas, despesas, doadores e extratos", "cadence": "Conforme publicação do TSE"},
+    {"key": "constitution", "title": "Constituição Federal", "publisher": "Presidência da República", "type": "Norma oficial", "url": "https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm", "use": "Princípios, bens da União e ordem econômica"},
+    {"key": "defense", "title": "Política e Estratégia Nacional de Defesa 2024", "publisher": "Ministério da Defesa", "type": "Política oficial", "url": "https://www.gov.br/defesa/pt-br/assuntos/copy_of_estado-e-defesa/estrategia-nacional-de-defesa", "use": "Defesa, tecnologia, espaço e base industrial"},
+    {"key": "minerals", "title": "Minerais críticos e estratégicos", "publisher": "Agência Nacional de Mineração", "type": "Referência técnica", "url": "https://www.gov.br/anm/pt-br/acesso-a-informacao/perguntas-frequentes/minerais-criticos-e-estrategicos", "use": "Criticidade e risco de suprimento"},
+    {"key": "ai", "title": "Plano Brasileiro de Inteligência Artificial", "publisher": "MCTI", "type": "Política oficial", "url": "https://www.gov.br/mcti/pt-br/acompanhe-o-mcti/transformacaodigital/plano-brasileiro-de-inteligencia-artificial", "use": "Dados, infraestrutura e autonomia tecnológica"},
+    {"key": "lula_us_congress", "title": "Mensagem ao Congresso Nacional 2026", "publisher": "Casa Civil", "type": "Documento oficial", "url": "https://www.gov.br/casacivil/pt-br/.arquivos/mensagem-ao-congresso-nacional-2026.pdf", "use": "Relação com os EUA, soberania e independência dos Poderes"},
+    {"key": "brasil_soberano", "title": "Plano Brasil Soberano", "publisher": "Presidência da República", "type": "Ato oficial", "url": "https://legislacao.presidencia.gov.br/atos/?ano=2025&ato=f92IzYq5UNZpWT009&numero=1309&tipo=MPV", "use": "Resposta a medidas tarifárias dos EUA"},
+    {"key": "wiki", "title": "Wikipédia em português", "publisher": "Wikimedia Foundation e comunidade", "type": "Fonte suplementar", "url": "https://pt.wikipedia.org/", "use": "Contexto biográfico; não determina notas"}
+  ]
+}

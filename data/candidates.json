@@ -1,0 +1,62 @@
+{
+  "snapshot_date": "2026-08-24",
+  "election": {"year": 2026, "office": "Presidência", "district": "Brasil"},
+  "candidates": [
+    {
+      "slug": "lula",
+      "ballot_name": "Lula",
+      "full_name": "Luiz Inácio Lula da Silva",
+      "party": "PT",
+      "party_name": "Partido dos Trabalhadores",
+      "number": 13,
+      "current_role": "Presidente da República",
+      "wiki_title": "Luiz Inácio Lula da Silva",
+      "plan_url": "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/arquivos/proposta-pt",
+      "summary": "A avaliação-base registra forte ênfase em política industrial, instrumentos públicos, ciência, saúde, dados, energia, multilateralismo e diversificação de parceiros.",
+      "benchmark_basis": "Plano oficial, atos de governo e declarações oficiais quando diretamente pertinentes ao critério.",
+      "registration_notice": "Situação e dados cadastrais devem ser conferidos no snapshot do TSE, atualizado ao longo do período eleitoral."
+    },
+    {
+      "slug": "caiado",
+      "ballot_name": "Caiado",
+      "full_name": "Ronaldo Ramos Caiado",
+      "party": "PSD",
+      "party_name": "Partido Social Democrático",
+      "number": 55,
+      "current_role": "Governador de Goiás",
+      "wiki_title": "Ronaldo Caiado",
+      "plan_url": "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/arquivos/proposta-psd",
+      "summary": "A avaliação-base registra ênfase em segurança, responsabilidade fiscal, produção agropecuária, infraestrutura, agregação de valor e inserção internacional pragmática.",
+      "benchmark_basis": "Plano oficial protocolado no TSE; atos e declarações só entram quando ligados diretamente ao fator.",
+      "registration_notice": "Situação e dados cadastrais devem ser conferidos no snapshot do TSE, atualizado ao longo do período eleitoral."
+    },
+    {
+      "slug": "flavio",
+      "ballot_name": "Flávio Bolsonaro",
+      "full_name": "Flávio Nantes Bolsonaro",
+      "party": "PL",
+      "party_name": "Partido Liberal",
+      "number": 22,
+      "current_role": "Senador pelo Rio de Janeiro",
+      "wiki_title": "Flávio Bolsonaro",
+      "plan_url": "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/arquivos/proposta-pl",
+      "summary": "A avaliação-base registra ênfase em segurança, abertura econômica, desestatização, capital privado e aproximação com os Estados Unidos; reduz notas quando faltam salvaguardas de controle, tecnologia e diversificação.",
+      "benchmark_basis": "Plano oficial e declarações próprias. Atos de familiares não são atribuídos ao candidato sem adesão comprovada.",
+      "registration_notice": "Situação e dados cadastrais devem ser conferidos no snapshot do TSE, atualizado ao longo do período eleitoral."
+    },
+    {
+      "slug": "renan",
+      "ballot_name": "Renan Santos",
+      "full_name": "Renan Antônio Ferreira dos Santos",
+      "party": "MISSÃO",
+      "party_name": "Partido Missão",
+      "number": 14,
+      "current_role": "Ativista e dirigente partidário",
+      "wiki_title": "Renan Santos",
+      "plan_url": "https://www.tse.jus.br/eleicoes/eleicoes-2026-content/arquivos/proposta-missao",
+      "summary": "A avaliação-base registra ênfase em segurança, ajuste fiscal, tecnologia, infraestrutura e reformas; abertura e privatização recebem ressalvas quando as salvaguardas não são detalhadas.",
+      "benchmark_basis": "Plano oficial protocolado no TSE; atos e declarações só entram quando ligados diretamente ao fator.",
+      "registration_notice": "Situação e dados cadastrais devem ser conferidos no snapshot do TSE, atualizado ao longo do período eleitoral."
+    }
+  ]
+}
